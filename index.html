@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaalysha's Art Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --nether-black: #1a0a0a;
+    --nether-red: #8b1a1a;
+    --nether-orange: #d4601a;
+    --nether-gold: #f5a623;
+    --lava-bright: #ff4500;
+    --netherrack: #6b2a2a;
+    --soul-sand: #4a3a2a;
+    --glowstone: #e8c84a;
+    --nether-brick: #2d1515;
+    --crimson: #8b0000;
+    --warped: #1a8b7a;
+    --text-primary: #f0dcc0;
+    --text-dim: #a08060;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    image-rendering: pixelated;
+  }
+
+  body {
+    background: var(--nether-black);
+    color: var(--text-primary);
+    font-family: 'VT323', monospace;
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect x='4' y='0' width='2' height='2' fill='%23f5a623'/%3E%3Crect x='6' y='2' width='2' height='2' fill='%23f5a623'/%3E%3Crect x='8' y='4' width='2' height='4' fill='%23f5a623'/%3E%3Crect x='6' y='8' width='2' height='2' fill='%23f5a623'/%3E%3Crect x='4' y='10' width='2' height='2' fill='%23f5a623'/%3E%3Crect x='2' y='12' width='2' height='2' fill='%23f5a623'/%3E%3Crect x='0' y='14' width='2' height='2' fill='%23f5a623'/%3E%3C/svg%3E") 0 0, auto;
+  }
+
+  /* ═══ NETHER PARTICLE CANVAS ═══ */
+  #particles-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ═══ LAVA BORDER TOP ═══ */
+  .lava-border {
+    position: fixed;
+    bottom: 0; left: 0;
+    width: 100%; height: 6px;
+    background: linear-gradient(90deg, var(--lava-bright), var(--nether-orange), var(--nether-gold), var(--lava-bright));
+    background-size: 300% 100%;
+    animation: lavaFlow 4s linear infinite;
+    z-index: 1000;
+    box-shadow: 0 -4px 20px rgba(255,69,0,0.5);
+  }
+  @keyframes lavaFlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* ═══ NAVIGATION ═══ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 999;
+    background: linear-gradient(180deg, rgba(26,10,10,0.97) 0%, rgba(26,10,10,0.85) 100%);
+    backdrop-filter: blur(8px);
+    border-bottom: 3px solid var(--nether-red);
+    padding: 0 24px;
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    color: var(--nether-orange);
+    text-shadow: 2px 2px 0 var(--crimson), 0 0 20px rgba(212,96,26,0.4);
+    letter-spacing: 2px;
+  }
+  .nav-logo .blink { animation: blink 1.2s step-end infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .nav-links { display: flex; gap: 8px; }
+  .nav-links a {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 9px;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .nav-links a:hover {
+    color: var(--nether-gold);
+    border-color: var(--nether-red);
+    background: rgba(139,26,26,0.2);
+    text-shadow: 0 0 10px rgba(245,166,35,0.5);
+  }
+
+  /* ═══ HERO / SPLASH ═══ */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    padding: 100px 24px 60px;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 80%, rgba(255,69,0,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 20%, rgba(139,0,0,0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 30%, rgba(212,96,26,0.08) 0%, transparent 50%);
+    z-index: -1;
+  }
+  .hero-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: clamp(28px, 6vw, 64px);
+    color: var(--nether-orange);
+    text-shadow:
+      3px 3px 0 var(--crimson),
+      6px 6px 0 rgba(0,0,0,0.5),
+      0 0 40px rgba(255,69,0,0.3);
+    margin-bottom: 20px;
+    animation: titlePulse 3s ease-in-out infinite;
+    line-height: 1.4;
+  }
+  @keyframes titlePulse {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.15); }
+  }
+  .hero-subtitle {
+    font-size: 28px;
+    color: var(--text-dim);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+  .hero-cta {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    color: var(--nether-black);
+    background: linear-gradient(180deg, var(--nether-gold) 0%, var(--nether-orange) 100%);
+    border: none;
+    padding: 16px 32px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow:
+      0 4px 0 var(--crimson),
+      0 8px 20px rgba(255,69,0,0.3);
+    transition: all 0.15s;
+    position: relative;
+  }
+  .hero-cta:hover {
+    transform: translateY(2px);
+    box-shadow:
+      0 2px 0 var(--crimson),
+      0 4px 10px rgba(255,69,0,0.5);
+  }
+  .hero-cta:active { transform: translateY(4px); box-shadow: none; }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    animation: float 2s ease-in-out infinite;
+    font-size: 24px;
+    color: var(--nether-orange);
+    opacity: 0.5;
+  }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+
+  /* ═══ SECTION STYLING ═══ */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 100px 24px;
+  }
+  .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  .section-header h2 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: clamp(16px, 3vw, 28px);
+    color: var(--nether-gold);
+    text-shadow: 2px 2px 0 var(--crimson), 0 0 20px rgba(245,166,35,0.2);
+    margin-bottom: 12px;
+  }
+  .section-header .divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--nether-red);
+    font-size: 14px;
+  }
+  .section-header .divider::before,
+  .section-header .divider::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--nether-red), transparent);
+  }
+
+  /* ═══ GALLERY ═══ */
+  #gallery {
+    background:
+      linear-gradient(180deg, transparent 0%, rgba(45,21,21,0.3) 50%, transparent 100%);
+  }
+  .gallery-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .gallery-item {
+    position: relative;
+    background: var(--nether-brick);
+    border: 3px solid var(--netherrack);
+    overflow: hidden;
+    aspect-ratio: 1;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .gallery-item:hover {
+    border-color: var(--nether-orange);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(255,69,0,0.2);
+  }
+  .gallery-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0,0,0,0.03) 3px,
+        rgba(0,0,0,0.03) 4px
+      );
+    pointer-events: none;
+    z-index: 2;
+  }
+  .gallery-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    color: var(--text-dim);
+    font-size: 20px;
+    text-align: center;
+    padding: 24px;
+  }
+  .gallery-placeholder .pixel-frame {
+    width: 80px;
+    height: 80px;
+    border: 3px dashed var(--netherrack);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+  }
+  .gallery-item .overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(26,10,10,0.95));
+    padding: 20px 16px 16px;
+    transform: translateY(100%);
+    transition: transform 0.3s;
+    z-index: 3;
+  }
+  .gallery-item:hover .overlay { transform: translateY(0); }
+  .overlay .art-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+    color: var(--nether-gold);
+    margin-bottom: 4px;
+  }
+  .overlay .art-desc {
+    font-size: 18px;
+    color: var(--text-dim);
+  }
+
+  /* ═══ ABOUT ME ═══ */
+  #about {
+    background:
+      linear-gradient(180deg, transparent, rgba(74,58,42,0.15) 50%, transparent);
+  }
+  .about-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .skin-card {
+    background: var(--nether-brick);
+    border: 3px solid var(--netherrack);
+    padding: 24px;
+    text-align: center;
+    position: relative;
+  }
+  .skin-card::after {
+    content: '';
+    position: absolute;
+    bottom: -3px; left: 20%; right: 20%;
+    height: 3px;
+    background: var(--nether-orange);
+    box-shadow: 0 0 15px rgba(212,96,26,0.5);
+  }
+  .skin-render {
+    width: 160px;
+    height: 280px;
+    margin: 0 auto 16px;
+    image-rendering: pixelated;
+    /* Idle floating animation */
+    animation: skinFloat 4s ease-in-out infinite;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.6));
+  }
+  @keyframes skinFloat {
+    0%, 100% { transform: translateY(0) rotateY(0deg); }
+    50% { transform: translateY(-8px); }
+  }
+  .skin-name {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    color: var(--nether-orange);
+    text-shadow: 1px 1px 0 var(--crimson);
+    margin-bottom: 4px;
+  }
+  .skin-tag {
+    font-size: 18px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+  }
+  .about-text {
+    padding-top: 8px;
+  }
+  .about-text h3 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    color: var(--nether-gold);
+    margin-bottom: 20px;
+  }
+  .about-text p {
+    font-size: 22px;
+    line-height: 1.7;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+  }
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 30px;
+  }
+  .stat-block {
+    background: rgba(45,21,21,0.6);
+    border: 2px solid var(--netherrack);
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-block .stat-val {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 18px;
+    color: var(--nether-orange);
+  }
+  .stat-block .stat-label {
+    font-size: 16px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  /* ═══ CONTACT ═══ */
+  #contact {
+    background: linear-gradient(180deg, transparent, rgba(139,26,26,0.08) 50%, transparent);
+    padding-bottom: 140px;
+  }
+  .contact-grid {
+    max-width: 700px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .contact-card {
+    background: var(--nether-brick);
+    border: 3px solid var(--netherrack);
+    padding: 28px 24px;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+  }
+  .contact-card:hover {
+    border-color: var(--nether-orange);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 24px rgba(255,69,0,0.15);
+  }
+  .contact-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .contact-label {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+    color: var(--nether-gold);
+    margin-bottom: 6px;
+  }
+  .contact-value {
+    font-size: 20px;
+    color: var(--text-primary);
+  }
+
+  /* ═══ FOOTER ═══ */
+  footer {
+    text-align: center;
+    padding: 30px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    color: var(--text-dim);
+    border-top: 3px solid var(--nether-brick);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ═══ LIGHTBOX ═══ */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,4,4,0.95);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox-close {
+    position: absolute;
+    top: 20px; right: 20px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    color: var(--nether-orange);
+    background: none;
+    border: 2px solid var(--nether-red);
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  .lightbox-content {
+    max-width: 80vw;
+    max-height: 70vh;
+    text-align: center;
+  }
+  .lightbox-content .pixel-frame {
+    width: 300px;
+    height: 300px;
+    border: 3px dashed var(--netherrack);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    margin: 0 auto;
+    color: var(--text-dim);
+  }
+  .lightbox-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    color: var(--nether-gold);
+    margin-top: 16px;
+  }
+
+  /* ═══ RESPONSIVE ═══ */
+  @media (max-width: 768px) {
+    .about-container {
+      grid-template-columns: 1fr;
+      justify-items: center;
+    }
+    .contact-grid { grid-template-columns: 1fr; }
+    .nav-links a { padding: 8px 10px; font-size: 8px; }
+    .nav-logo { font-size: 11px; }
+    .about-stats { grid-template-columns: 1fr; }
+  }
+
+  /* ═══ NETHER BLOCK TEXTURE OVERLAY ═══ */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 15px,
+        rgba(107,42,42,0.03) 15px,
+        rgba(107,42,42,0.03) 16px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 15px,
+        rgba(107,42,42,0.03) 15px,
+        rgba(107,42,42,0.03) 16px
+      );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ═══ SCANLINE ═══ */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.015) 2px,
+      rgba(0,0,0,0.015) 4px
+    );
+    pointer-events: none;
+    z-index: 9998;
+  }
+</style>
+</head>
+<body>
+
+<!-- NETHER PARTICLES -->
+<canvas id="particles-canvas"></canvas>
+
+<!-- LAVA BORDER -->
+<div class="lava-border"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">KAALYSHA<span class="blink">_</span></div>
+    <div class="nav-links">
+      <a href="#gallery">GALLERY</a>
+      <a href="#about">ABOUT</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-title">
+    KAALYSHA'S<br>ART PORTAL
+  </div>
+  <div class="hero-subtitle">⬥ Enter The Nether ⬥</div>
+  <a href="#gallery" class="hero-cta">VIEW GALLERY</a>
+  <div class="scroll-indicator">▼</div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-header">
+    <h2>⛏ GALLERY</h2>
+    <div class="divider">ARTWORK SHOWCASE</div>
+  </div>
+  <div class="gallery-grid">
+
+    <div class="gallery-item" onclick="openLightbox('Nether Fortress', 'Digital Art — 2025')">
+      <div class="gallery-placeholder">
+        <div class="pixel-frame">🎨</div>
+        <span>Artwork 1</span>
+      </div>
+      <div class="overlay">
+        <div class="art-title">NETHER FORTRESS</div>
+        <div class="art-desc">Digital Art — 2025</div>
+      </div>
+    </div>
+
+    <div class="gallery-item" onclick="openLightbox('Soul Fire', 'Illustration — 2025')">
+      <div class="gallery-placeholder">
+        <div class="pixel-frame">🖌️</div>
+        <span>Artwork 2</span>
+      </div>
+      <div class="overlay">
+        <div class="art-title">SOUL FIRE</div>
+        <div class="art-desc">Illustration — 2025</div>
+      </div>
+    </div>
+
+    <div class="gallery-item" onclick="openLightbox('Crimson Forest', 'Concept Art — 2025')">
+      <div class="gallery-placeholder">
+        <div class="pixel-frame">✨</div>
+        <span>Artwork 3</span>
+      </div>
+      <div class="overlay">
+        <div class="art-title">CRIMSON FOREST</div>
+        <div class="art-desc">Concept Art — 2025</div>
+      </div>
+    </div>
+
+    <div class="gallery-item" onclick="openLightbox('Blaze Guardian', 'Fan Art — 2025')">
+      <div class="gallery-placeholder">
+        <div class="pixel-frame">🔥</div>
+        <span>Artwork 4</span>
+      </div>
+      <div class="overlay">
+        <div class="art-title">BLAZE GUARDIAN</div>
+        <div class="art-desc">Fan Art — 2025</div>
+      </div>
+    </div>
+
+    <div class="gallery-item" onclick="openLightbox('Wither Storm', 'Digital Painting — 2025')">
+      <div class="gallery-placeholder">
+        <div class="pixel-frame">💀</div>
+        <span>Artwork 5</span>
+      </div>
+      <div class="overlay">
+        <div class="art-title">WITHER STORM</div>
+        <div class="art-desc">Digital Painting — 2025</div>
+      </div>
+    </div>
+
+    <div class="gallery-item" onclick="openLightbox('Ghast Tears', 'Mixed Media — 2025')">
+      <div class="gallery-placeholder">
+        <div class="pixel-frame">👻</div>
+        <span>Artwork 6</span>
+      </div>
+      <div class="overlay">
+        <div class="art-title">GHAST TEARS</div>
+        <div class="art-desc">Mixed Media — 2025</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT ME -->
+<section id="about">
+  <div class="section-header">
+    <h2>⚔ ABOUT ME</h2>
+    <div class="divider">THE ARTIST</div>
+  </div>
+  <div class="about-container">
+    <div class="skin-card">
+      <img
+        class="skin-render"
+        src="https://mc-heads.net/body/Kaalysha/right"
+        alt="Kaalysha Minecraft Skin"
+        onerror="this.onerror=null;this.src='https://crafatar.com/renders/body/c06f89064c8a49119c29ea1dbd1aab82?overlay&default=MHF_Steve';"
+      />
+      <div class="skin-name">KAALYSHA</div>
+      <div class="skin-tag">★ ARTIST ★</div>
+    </div>
+    <div class="about-text">
+      <h3>>> WHO AM I?</h3>
+      <p>
+        Welcome to my corner of the Nether! I'm <strong style="color:var(--nether-orange)">Kaalysha</strong> — a digital artist who loves bringing worlds to life through art. Whether it's characters, landscapes, or fantastical scenes, every piece I create is crafted with passion and pixel-perfect care.
+      </p>
+      <p>
+        My style blends vibrant colors with moody atmospheres, inspired by games, fantasy, and the infinite possibilities of imagination. Thanks for stopping by my portal — feel free to explore!
+      </p>
+      <div class="about-stats">
+        <div class="stat-block">
+          <div class="stat-val">???</div>
+          <div class="stat-label">Artworks</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-val">???</div>
+          <div class="stat-label">Commissions</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-val">???</div>
+          <div class="stat-label">Followers</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-val">∞</div>
+          <div class="stat-label">Passion</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <h2>📬 CONTACT</h2>
+    <div class="divider">GET IN TOUCH</div>
+  </div>
+  <div class="contact-grid">
+    <a class="contact-card" href="#" title="Discord">
+      <span class="contact-icon">💬</span>
+      <div class="contact-label">DISCORD</div>
+      <div class="contact-value">@Kaalysha</div>
+    </a>
+    <a class="contact-card" href="#" title="Twitter / X">
+      <span class="contact-icon">🐦</span>
+      <div class="contact-label">TWITTER / X</div>
+      <div class="contact-value">@Kaalysha</div>
+    </a>
+    <a class="contact-card" href="#" title="Instagram">
+      <span class="contact-icon">📸</span>
+      <div class="contact-label">INSTAGRAM</div>
+      <div class="contact-value">@Kaalysha</div>
+    </a>
+    <a class="contact-card" href="mailto:your@email.com" title="Email">
+      <span class="contact-icon">✉️</span>
+      <div class="contact-label">EMAIL</div>
+      <div class="contact-value">your@email.com</div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  BUILT WITH 🔥 IN THE NETHER &nbsp;|&nbsp; © 2026 KAALYSHA
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕ CLOSE</button>
+  <div class="lightbox-content" onclick="event.stopPropagation()">
+    <div class="pixel-frame">🖼️</div>
+    <div class="lightbox-title" id="lightbox-title"></div>
+  </div>
+</div>
+
+<script>
+  // ═══ NETHER PARTICLES ═══
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  class NetherParticle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = canvas.height + Math.random() * 40;
+      this.size = Math.random() * 3 + 1;
+      this.speedY = -(Math.random() * 1.2 + 0.3);
+      this.speedX = (Math.random() - 0.5) * 0.6;
+      this.opacity = Math.random() * 0.6 + 0.2;
+      this.life = 0;
+      this.maxLife = Math.random() * 300 + 100;
+      const colors = ['#ff4500','#d4601a','#f5a623','#8b1a1a','#e8c84a'];
+      this.color = colors[Math.floor(Math.random() * colors.length)];
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      this.life++;
+      if (this.life > this.maxLife * 0.7) {
+        this.opacity *= 0.98;
+      }
+      if (this.life >= this.maxLife || this.opacity < 0.01) this.reset();
+    }
+    draw() {
+      ctx.fillStyle = this.color;
+      ctx.globalAlpha = this.opacity;
+      // Pixel-style square particles
+      const s = Math.floor(this.size);
+      ctx.fillRect(Math.floor(this.x), Math.floor(this.y), s, s);
+    }
+  }
+
+  for (let i = 0; i < 60; i++) {
+    const p = new NetherParticle();
+    p.y = Math.random() * canvas.height;
+    p.life = Math.random() * p.maxLife;
+    particles.push(p);
+  }
+
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(animateParticles);
+  }
+  animateParticles();
+
+  // ═══ LIGHTBOX ═══
+  function openLightbox(title, desc) {
+    document.getElementById('lightbox-title').textContent = title + ' — ' + desc;
+    document.getElementById('lightbox').classList.add('active');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+  }
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
+
+  // ═══ SMOOTH REVEAL ON SCROLL ═══
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.gallery-item, .contact-card, .skin-card, .about-text').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
