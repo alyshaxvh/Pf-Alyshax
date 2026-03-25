@@ -24,8 +24,8 @@
     --dragon-purple: #7b2d8e;
     --text-primary: #e8dff5;
     --text-dim: #9a8bb5;
-    --yellow-rank: #ffd700;
-    --lightblue-rank: #5bcefa;
+    --yellow-rank: #e5ff00;
+    --lightblue-rank: #33c7d1;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -312,11 +312,22 @@
     width: 4px; height: 100%;
     background: linear-gradient(180deg, var(--ender-eye), var(--end-magenta));
   }
+  .staff-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .staff-logo {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px rgba(155,48,255,0.3));
+  }
   .staff-server {
     font-family: 'Press Start 2P', cursive;
     font-size: 16px;
     color: var(--end-lavender);
-    margin-bottom: 16px;
     text-shadow: 0 0 10px rgba(199,125,255,0.3);
   }
   .staff-role-flow {
@@ -375,15 +386,12 @@
   .apps-grid {
     max-width: 900px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 24px;
   }
   .app-card {
     background: var(--obsidian);
     border: 3px solid var(--obsidian-light);
     padding: 28px 24px;
-    text-align: center;
+    text-align: left;
     transition: all 0.3s;
     position: relative;
     overflow: hidden;
@@ -420,12 +428,24 @@
     color: var(--text-dim);
     line-height: 1.5;
   }
+  .app-card-wide {
+    width: 100%;
+  }
+  .app-layout {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    justify-content: flex-start;
+  }
+  .app-info {
+    text-align: left;
+  }
   .app-placeholder {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 12px;
-    padding: 20px;
+    padding: 0;
   }
   .app-placeholder .placeholder-icon {
     width: 60px; height: 60px;
@@ -435,6 +455,13 @@
     justify-content: center;
     font-size: 28px;
     color: var(--text-dim);
+  }
+  .app-logo {
+    width: 400px;
+    height: auto;
+    object-fit: contain;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 10px rgba(155,48,255,0.4));
   }
 
   /* ═══ CONTACT ═══ */
@@ -583,8 +610,8 @@
 <section class="hero" id="home">
   <div class="hero-bg"></div>
   <div class="hero-title">KAALYSHA</div>
-  <div class="hero-subtitle">⬥ The End Awaits ⬥</div>
-  <a href="#about" class="hero-cta">ENTER THE VOID</a>
+  <div class="hero-subtitle">⬥ Welcome To My Portfolio ⬥</div>
+  <a href="#about" class="hero-cta">WOOOSH!</a>
   <div class="scroll-indicator">▼</div>
 </section>
 
@@ -602,8 +629,8 @@
         alt="Kaalysha Minecraft Skin"
         onerror="this.onerror=null;this.src='https://crafatar.com/renders/body/c06f89064c8a49119c29ea1dbd1aab82?overlay&default=MHF_Steve';"
       />
-      <div class="skin-name">KAALYSHA</div>
-      <div class="skin-tag">★ STAFF ★</div>
+      <div class="skin-name">(MOD) KAALYSHA</div>
+      <div class="skin-tag">STAFFING ON AKUMAMC</div>
     </div>
     <div class="about-text">
       <h3>>> WELCOME TO MY PORTAL</h3>
@@ -621,42 +648,56 @@
 <section id="staffing">
   <div class="section-header">
     <h2>🛡 STAFFING EXPERIENCE</h2>
-    <div class="divider">MY JOURNEY</div>
+    <div class="divider">MY STAFFING JOURNEY</div>
   </div>
   <div class="staffing-grid">
 
-    <!-- HexedMC -->
+    <!-- ZenPvP -->
     <div class="staff-card">
-      <div class="staff-server">HexedMC</div>
+      <div class="staff-header">
+        <img class="staff-logo" src="zenpvp.png" alt="ZenPvP Logo">
+        <div class="staff-server">ZenPvP</div>
+      </div>
       <div class="staff-role-flow">
         <span class="role-badge helper">HELPER</span>
         <span class="role-arrow">»</span>
-        <span class="role-badge sr-mod">SENIOR MODERATOR</span>
+        <span class="role-badge sr-mod">MOD</span>
       </div>
     </div>
 
-    <!-- ZenPvP -->
+    <!-- HexedMC -->
     <div class="staff-card">
-      <div class="staff-server">ZenPvP</div>
+      <div class="staff-header">
+        <img class="staff-logo" src="hexedmc.png" alt="HexedMC Logo">
+        <div class="staff-server">HexedMC</div>
+      </div>
       <div class="staff-role-flow">
         <span class="role-badge helper">HELPER</span>
         <span class="role-arrow">»</span>
-        <span class="role-badge mod">MODERATOR</span>
+        <span class="role-badge mod">SR-MOD</span>
       </div>
     </div>
 
     <!-- PvPVille -->
     <div class="staff-card">
-      <div class="staff-server">PvPVille</div>
+      <div class="staff-header">
+        <img class="staff-logo" src="pvpville.png" alt="PvPVille Logo">
+        <div class="staff-server">PvPVille</div>
+      </div>
       <div class="staff-role-flow">
-        <span class="role-badge sr-mod">SENIOR MODERATOR</span>
+        <span class="role-badge player">PLAYER</span>
+        <span class="role-arrow">»</span>
+        <span class="role-badge sr-mod">SR-MOD</span>
       </div>
       <div class="staff-started">Started as Senior Moderator</div>
     </div>
 
     <!-- AkumaMC -->
     <div class="staff-card">
-      <div class="staff-server">AkumaMC</div>
+      <div class="staff-header">
+        <img class="staff-logo" src="akumamc.png" alt="AkumaMC Logo">
+        <div class="staff-server">AkumaMC</div>
+      </div>
       <div class="staff-role-flow">
         <span class="role-badge helper">HELPER</span>
         <span class="role-arrow">»</span>
@@ -675,27 +716,13 @@
   </div>
   <div class="apps-grid">
 
-    <div class="app-card">
-      <div class="app-placeholder">
-        <div class="placeholder-icon">⏳</div>
-        <div class="app-name">COMING SOON</div>
-        <div class="app-desc">Projects will appear here</div>
-      </div>
-    </div>
-
-    <div class="app-card">
-      <div class="app-placeholder">
-        <div class="placeholder-icon">⏳</div>
-        <div class="app-name">COMING SOON</div>
-        <div class="app-desc">Projects will appear here</div>
-      </div>
-    </div>
-
-    <div class="app-card">
-      <div class="app-placeholder">
-        <div class="placeholder-icon">⏳</div>
-        <div class="app-name">COMING SOON</div>
-        <div class="app-desc">Projects will appear here</div>
+    <div class="app-card app-card-wide">
+      <div class="app-layout">
+        <img class="app-logo" src="UMH-Only-LOGO.png" alt="Ultimate Minecraft Hangout Logo">
+        <div class="app-info">
+          <div class="app-name">ULTIMATE MINECRAFT HANGOUT</div>
+          <div class="app-desc">👋 Hey there, crafter! Whether you're grinding ranks in Prison, floating sky-high in Skyblock, or just looking for people to play with — this is your place. A chill, active community for every type of Minecraft player. Come say hi! 💎<div style="margin-top:8px; line-height:1.2;"><span style="color:var(--ender-eye); font-family:'Press Start 2P', cursive; font-size:14px;">Discord Invitation</span><br><a href="https://discord.gg/umh" target="_blank" style="color:var(--end-lavender); text-decoration:none; font-size:20px;">discord.gg/umh (Click the Link)</a></div></div></div>
+        </div>
       </div>
     </div>
 
