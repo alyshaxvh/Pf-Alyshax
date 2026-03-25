@@ -486,6 +486,61 @@
     filter: drop-shadow(0 0 10px rgba(155,48,255,0.4));
   }
 
+  /* ═══ REVIEWS ═══ */
+  #reviews {
+    background: linear-gradient(180deg, transparent, rgba(106,13,173,0.06) 50%, transparent);
+  }
+  .reviews-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .review-card {
+    background: var(--obsidian);
+    border: 3px solid var(--obsidian-light);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .review-card:hover {
+    border-color: var(--end-magenta);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 24px rgba(155,48,255,0.15);
+  }
+  .review-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--ender-eye), var(--end-magenta));
+  }
+  .review-stars {
+    color: var(--yellow-rank);
+    font-size: 18px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+  .review-text {
+    font-size: 20px;
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+  .review-author {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+    color: var(--ender-eye);
+  }
+  .review-role {
+    font-size: 16px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
   /* ═══ CONTACT ═══ */
   #contact {
     background: linear-gradient(180deg, transparent, rgba(106,13,173,0.06) 50%, transparent);
@@ -581,6 +636,7 @@
     .nav-logo { font-size: 11px; }
     .staff-role-flow { justify-content: center; }
     .apps-grid { grid-template-columns: repeat(2, 1fr); }
+    .reviews-grid { grid-template-columns: 1fr; }
     .discord-links { flex-direction: column; align-items: center; }
   }
 
@@ -623,6 +679,7 @@
       <a href="#about">ABOUT</a>
       <a href="#staffing">STAFFING</a>
       <a href="#showcases">SHOWCASES</a>
+      <a href="#reviews">REVIEWS</a>
       <a href="#contact">CONTACT</a>
     </div>
   </div>
@@ -769,6 +826,65 @@
       <img class="pixel-art-img" src="pixelart/art4.png" alt="Pixel Art 4" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
       <div class="app-placeholder" style="display:none;"><div class="placeholder-icon">🎨</div></div>
       <div class="pixel-art-label">TakeHer's Profile</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="section-header">
+    <h2>⭐ REVIEWS</h2>
+    <div class="divider">WHAT PEOPLE SAY</div>
+  </div>
+  <div class="reviews-grid">
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Loved working with Alyshax! The pixel art turned out amazing and the whole process was super smooth. Would definitely collab again."</div>
+      <div class="review-author">— ZEPHYROS</div>
+      <div class="review-role">Server Owner</div>
+      <div class="review-role">Product: Profile Picture</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Super talented and easy to work with. Alyshax nailed exactly what I wanted on the first try. Genuinely impressed with the quality."</div>
+      <div class="review-author">— FROSTBYTE</div>
+      <div class="review-role">Content Creator</div>
+      <div class="review-role">Product: Server Logo</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★☆</div>
+      <div class="review-text">"Our collaboration was great from start to finish. Really professional, fast delivery, and the end result looked incredible. 10/10."</div>
+      <div class="review-author">— NXVAA</div>
+      <div class="review-role">Community Manager</div>
+      <div class="review-role">Product: Banner Art</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Alyshax brought my idea to life perfectly. The attention to detail in the pixel art was next level. So happy with the result!"</div>
+      <div class="review-author">— DRAXIEL</div>
+      <div class="review-role">Player</div>
+      <div class="review-role">Product: Profile Picture</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Honestly one of the best collabs I've had. Super communicative, delivered on time, and the work speaks for itself. Highly recommend."</div>
+      <div class="review-author">— MYTHICZZ</div>
+      <div class="review-role">Server Admin</div>
+      <div class="review-role">Product: Emote Pack</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★☆</div>
+      <div class="review-text">"Was a pleasure working together. The pixel art exceeded my expectations and Alyshax was great to communicate with throughout. Will be back!"</div>
+      <div class="review-author">— LUNEXIA</div>
+      <div class="review-role">Builder</div>
+      <div class="review-role">Product: Character Art</div>
     </div>
 
   </div>
