@@ -385,22 +385,38 @@
     font-style: italic;
   }
 
-  /* ═══ APPLICATIONS ═══ */
-  #applications {
+  /* ═══ SHOWCASES ═══ */
+  #showcases {
     background: linear-gradient(180deg, transparent, rgba(42,26,62,0.1) 50%, transparent);
   }
   .apps-grid {
     max-width: 900px;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
   }
   .app-card {
     background: var(--obsidian);
     border: 3px solid var(--obsidian-light);
-    padding: 28px 24px;
-    text-align: left;
+    padding: 20px;
+    text-align: center;
     transition: all 0.3s;
     position: relative;
     overflow: hidden;
+  }
+  .pixel-art-img {
+    width: 128px;
+    height: 128px;
+    image-rendering: pixelated;
+    margin: 0 auto 12px;
+    display: block;
+  }
+  .pixel-art-label {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 9px;
+    color: var(--end-lavender);
+    margin-top: 8px;
   }
   .app-card:hover {
     border-color: var(--ender-eye);
@@ -564,7 +580,7 @@
     .nav-links a { padding: 8px 10px; font-size: 8px; }
     .nav-logo { font-size: 11px; }
     .staff-role-flow { justify-content: center; }
-    .apps-grid { grid-template-columns: 1fr; }
+    .apps-grid { grid-template-columns: repeat(2, 1fr); }
     .discord-links { flex-direction: column; align-items: center; }
   }
 
@@ -606,7 +622,7 @@
     <div class="nav-links">
       <a href="#about">ABOUT</a>
       <a href="#staffing">STAFFING</a>
-      <a href="#applications">APPS</a>
+      <a href="#showcases">SHOWCASES</a>
       <a href="#contact">CONTACT</a>
     </div>
   </div>
@@ -648,7 +664,7 @@
       </p>
       <h3>>> CONTACT</h3>
       <p>
-        Discord: @alyshaxmc<br>Discord UMH:  discord.gg/umh
+        Discord: @alyshaxmc
       </p>
     </div>
   </div>
@@ -722,22 +738,37 @@
   </div>
 </section>
 
-<!-- APPLICATIONS -->
-<section id="applications">
+<!-- SHOWCASES -->
+<section id="showcases">
   <div class="section-header">
-    <h2>🔮 APPLICATIONS</h2>
-    <div class="divider">MY PROJECTS</div>
+    <h2>🎨 SHOWCASES</h2>
+    <div class="divider">ARTS MADE BY ALYSHA</div>
   </div>
   <div class="apps-grid">
 
-    <div class="app-card app-card-wide">
-      <div class="app-layout">
-        <img class="app-logo" src="UMH-Only-LOGO.png" alt="Ultimate Minecraft Hangout Logo">
-        <div class="app-info">
-          <div class="app-name">ULTIMATE MINECRAFT HANGOUT</div>
-          <div class="app-desc">👋 Hey there, crafter! Whether you're grinding ranks in Prison, floating sky-high in Skyblock, or just looking for people to play with — this is your place. A chill, active community for every type of Minecraft player. Come say hi! 💎<div style="margin-top:8px; line-height:1.2;"><span style="color:var(--ender-eye); font-family:'Press Start 2P', cursive; font-size:14px;">Discord Invitation</span><br><a href="https://discord.gg/umh" target="_blank" style="color:var(--end-lavender); text-decoration:none; font-size:20px;">discord.gg/umh (Click the Link)</a></div></div></div>
-        </div>
+    <div class="app-card">
+      <img class="pixel-art-img" src="pixelart/art1.png" alt="Pixel Art 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="app-placeholder" style="display:none;"><div class="placeholder-icon">🎨</div></div>
+      <div class="pixel-art-label">Kilyyan's Profile</div>
+    </div>
+
+    <div class="app-card">
+      <img class="pixel-art-img" src="pixelart/art2.png" alt="Pixel Art 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="app-placeholder" style="display:none;"><div class="placeholder-icon">🎨</div></div>
+      <div class="pixel-art-label">Alysha's Profile
       </div>
+    </div>
+
+    <div class="app-card">
+      <img class="pixel-art-img" src="pixelart/art3.png" alt="Pixel Art 3" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="app-placeholder" style="display:none;"><div class="placeholder-icon">🎨</div></div>
+      <div class="pixel-art-label">Jaipel's Profile</div>
+    </div>
+
+    <div class="app-card">
+      <img class="pixel-art-img" src="pixelart/art4.png" alt="Pixel Art 4" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="app-placeholder" style="display:none;"><div class="placeholder-icon">🎨</div></div>
+      <div class="pixel-art-label">TakeHer's Profile</div>
     </div>
 
   </div>
@@ -755,16 +786,13 @@
       <div class="contact-label">DISCORD</div>
       <div class="contact-value">@alyshaxmc</div>
       <div class="contact-sub">Reach out via Discord</div>
-      <div class="discord-links">
-        <a class="discord-btn" href="https://discord.gg/umh" target="_blank">JOIN SERVER</a>
-      </div>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  BUILT FROM THE END &nbsp;|&nbsp; © 2026 ALYSHAX
+  BUILT BY ALYSHAX &nbsp;|&nbsp; © 2026
 </footer>
 
 <script>
