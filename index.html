@@ -94,7 +94,7 @@
   }
   .nav-logo .blink { animation: blink 1.2s step-end infinite; }
   @keyframes blink { 50% { opacity: 0; } }
-  .nav-links { display: flex; gap: 8px; }
+  .nav-links { display: flex; gap: 8px; align-items: center; }
   .nav-links a {
     font-family: 'Press Start 2P', cursive;
     font-size: 9px;
@@ -107,6 +107,70 @@
   .nav-links a:hover {
     color: var(--ender-eye);
     border-color: var(--obsidian-light);
+    background: rgba(106,13,173,0.15);
+    text-shadow: 0 0 10px rgba(46,232,187,0.4);
+  }
+
+  /* ═══ NAV DROPDOWN ═══ */
+  .nav-dropdown {
+    position: relative;
+  }
+  .nav-dropdown > .nav-dropdown-toggle {
+    cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 9px;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: none;
+  }
+  .nav-dropdown > .nav-dropdown-toggle::after {
+    content: '▼';
+    font-size: 6px;
+    transition: transform 0.2s;
+  }
+  .nav-dropdown:hover > .nav-dropdown-toggle::after {
+    transform: rotate(180deg);
+  }
+  .nav-dropdown:hover > .nav-dropdown-toggle {
+    color: var(--ender-eye);
+    border-color: var(--obsidian-light);
+    background: rgba(106,13,173,0.15);
+    text-shadow: 0 0 10px rgba(46,232,187,0.4);
+  }
+  .nav-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    background: rgba(10,6,18,0.97);
+    border: 2px solid var(--obsidian-light);
+    backdrop-filter: blur(10px);
+    z-index: 1002;
+    padding: 4px 0;
+  }
+  .nav-dropdown:hover .nav-dropdown-menu {
+    display: flex;
+    flex-direction: column;
+  }
+  .nav-dropdown-menu a {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 9px;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 10px 16px;
+    border: none !important;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-dropdown-menu a:hover {
+    color: var(--ender-eye);
     background: rgba(106,13,173,0.15);
     text-shadow: 0 0 10px rgba(46,232,187,0.4);
   }
@@ -563,6 +627,46 @@
     color: var(--text-dim);
     margin-top: 4px;
   }
+  .review-discord {
+    font-size: 15px;
+    color: var(--ender-eye-dim);
+    text-decoration: none;
+    margin-top: 6px;
+    display: inline-block;
+    transition: color 0.2s;
+  }
+  .review-discord:hover {
+    color: var(--ender-eye);
+    text-decoration: underline;
+  }
+  /* Akuma theme — orange/yellow */
+  .review-akuma .review-text { color: #ffcc44; }
+  .review-akuma .review-author { color: #ff9a2e; }
+  .review-akuma .review-role { color: #e8a840; }
+  .review-akuma .review-discord { color: #cc7a20; }
+  .review-akuma .review-discord:hover { color: #ffcc44; }
+  .review-akuma:hover { border-color: #ff9a2e; box-shadow: 0 6px 24px rgba(255,154,46,0.2); }
+  .review-akuma::before { background: linear-gradient(90deg, #ff9a2e, #ffcc44); }
+  .review-akuma .review-logo { filter: drop-shadow(0 0 15px rgba(255,154,46,0.4)); }
+
+  /* Hexed theme — purple */
+  .review-hexed .review-text { color: #c77dff; }
+  .review-hexed .review-author { color: #9b30ff; }
+  .review-hexed .review-role { color: #b065e0; }
+  .review-hexed .review-discord { color: #7b2d8e; }
+  .review-hexed .review-discord:hover { color: #c77dff; }
+  .review-hexed:hover { border-color: #9b30ff; box-shadow: 0 6px 24px rgba(155,48,255,0.2); }
+  .review-hexed::before { background: linear-gradient(90deg, #9b30ff, #c77dff); }
+
+  .review-logo {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 16px;
+    filter: drop-shadow(0 0 15px rgba(155,48,255,0.3));
+    image-rendering: pixelated;
+  }
 
   /* ═══ CONTACT ═══ */
   #contact {
@@ -680,6 +784,26 @@
       border-bottom: 1px solid var(--obsidian-light);
     }
     .nav-links a:last-child { border-bottom: none; }
+
+    .nav-dropdown { width: 100%; }
+    .nav-dropdown > .nav-dropdown-toggle {
+      padding: 14px 24px;
+      font-size: 10px;
+      border-bottom: 1px solid var(--obsidian-light);
+      width: 100%;
+    }
+    .nav-dropdown-menu {
+      position: static;
+      min-width: unset;
+      border: none;
+      background: rgba(17,11,31,0.9);
+      padding: 0;
+    }
+    .nav-dropdown-menu a {
+      padding: 12px 24px 12px 40px;
+      font-size: 9px;
+      border-bottom: 1px solid var(--obsidian-light) !important;
+    }
   }
 
   /* ═══ VOID TEXTURE ═══ */
@@ -722,9 +846,14 @@
     </button>
     <div class="nav-links">
       <a href="#about" onclick="document.querySelector('.nav-links').classList.remove('open')">ABOUT</a>
-      <a href="#staffing" onclick="document.querySelector('.nav-links').classList.remove('open')">STAFFING</a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-toggle">STAFFING</button>
+        <div class="nav-dropdown-menu">
+          <a href="#staffing" onclick="document.querySelector('.nav-links').classList.remove('open')">STAFFING</a>
+          <a href="#reviews" onclick="document.querySelector('.nav-links').classList.remove('open')">STAFFING REVIEWS</a>
+        </div>
+      </div>
       <a href="#showcases" onclick="document.querySelector('.nav-links').classList.remove('open')">SHOWCASES</a>
-      <a href="#reviews" onclick="document.querySelector('.nav-links').classList.remove('open')">REVIEWS</a>
       <a href="#contact" onclick="document.querySelector('.nav-links').classList.remove('open')">CONTACT</a>
     </div>
   </div>
@@ -879,57 +1008,26 @@
 <!-- REVIEWS -->
 <section id="reviews">
   <div class="section-header">
-    <h2>⭐ REVIEWS</h2>
-    <div class="divider">WHAT PEOPLE SAY</div>
+    <h2>⭐ STAFFING REVIEWS</h2>
+    <div class="divider">Short Summary Alysha's Staffing Period</div>
   </div>
   <div class="reviews-grid">
 
-    <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">"Loved working with Alyshax! The pixel art turned out amazing and the whole process was super smooth. Would definitely collab again."</div>
-      <div class="review-author">— ZEPHYROS</div>
-      <div class="review-role">Server Owner</div>
-      <div class="review-role">Product: Profile Picture</div>
+    <div class="review-card review-akuma">
+      <img class="review-logo" src="akumamc.png" alt="AkumaMC Logo">
+      <div class="review-text">"???"</div>
+      <div class="review-author">— ??? (AkumaMC)</div>
+      <div class="review-role">Staff Manager</div>
+      <a href="https://discord.gg/akumamc" target="_blank" class="review-discord">discord.gg/akumamc</a>
     </div>
 
-    <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">"Super talented and easy to work with. Alyshax nailed exactly what I wanted on the first try. Genuinely impressed with the quality."</div>
-      <div class="review-author">— FROSTBYTE</div>
-      <div class="review-role">Content Creator</div>
-      <div class="review-role">Product: Server Logo</div>
-    </div>
-
-    <div class="review-card">
-      <div class="review-stars">★★★★☆</div>
-      <div class="review-text">"Our collaboration was great from start to finish. Really professional, fast delivery, and the end result looked incredible. 10/10."</div>
-      <div class="review-author">— NXVAA</div>
-      <div class="review-role">Community Manager</div>
-      <div class="review-role">Product: Banner Art</div>
-    </div>
-
-    <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">"Alyshax brought my idea to life perfectly. The attention to detail in the pixel art was next level. So happy with the result!"</div>
-      <div class="review-author">— DRAXIEL</div>
-      <div class="review-role">Player</div>
-      <div class="review-role">Product: Profile Picture</div>
-    </div>
-
-    <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">"Honestly one of the best collabs I've had. Super communicative, delivered on time, and the work speaks for itself. Highly recommend."</div>
-      <div class="review-author">— MYTHICZZ</div>
-      <div class="review-role">Server Admin</div>
-      <div class="review-role">Product: Emote Pack</div>
-    </div>
-
-    <div class="review-card">
-      <div class="review-stars">★★★★☆</div>
-      <div class="review-text">"Was a pleasure working together. The pixel art exceeded my expectations and Alyshax was great to communicate with throughout. Will be back!"</div>
-      <div class="review-author">— LUNEXIA</div>
-      <div class="review-role">Builder</div>
-      <div class="review-role">Product: Character Art</div>
+    <div class="review-card review-hexed">
+      <img class="review-logo" src="hexedmc.png" alt="HexedMC Logo">
+      <div class="review-text">"???"</div>
+      <div class="review-author">— ??? (HexedMC)</div>
+      <div class="review-role">Staff Manager</div>
+      <a href="https://discord.gg/hexedmc" target="_blank" class="review-discord">discord.gg/hexedmc</a>
+      
     </div>
 
   </div>
