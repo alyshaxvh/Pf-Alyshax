@@ -360,26 +360,45 @@
   }
   .skin-card {
     background: var(--obsidian);
-    border: 3px solid var(--obsidian-light);
     padding: 24px;
     text-align: center;
     position: relative;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+  }
+  .skin-card::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    background: linear-gradient(135deg, var(--ender-eye), var(--end-magenta), var(--end-purple), var(--chorus), var(--ender-eye));
+    background-size: 300% 300%;
+    animation: borderSpin 5s linear infinite;
+    z-index: -1;
   }
   .skin-card::after {
     content: '';
     position: absolute;
-    bottom: -3px; left: 20%; right: 20%;
-    height: 3px;
-    background: var(--ender-eye);
-    box-shadow: 0 0 15px rgba(46,232,187,0.5);
+    inset: -6px;
+    background: linear-gradient(135deg, var(--ender-eye), var(--end-magenta), var(--end-purple), var(--ender-eye));
+    background-size: 300% 300%;
+    animation: borderSpin 5s linear infinite;
+    z-index: -2;
+    opacity: 0.4;
+    filter: blur(12px);
+  }
+  @keyframes borderSpin {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
   .skin-render {
-    width: 160px;
-    height: 280px;
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
     margin: 0 auto 16px;
-    image-rendering: pixelated;
     animation: skinFloat 4s ease-in-out infinite;
     filter: drop-shadow(0 10px 25px rgba(106,13,173,0.5));
+    border: 2px solid var(--obsidian-light);
   }
   @keyframes skinFloat {
     0%, 100% { transform: translateY(0); }
@@ -1039,9 +1058,8 @@
     <div class="skin-card">
       <img
         class="skin-render"
-        src="https://mc-heads.net/body/Kaalysha/right"
-        alt="Kaalysha Minecraft Skin"
-        onerror="this.onerror=null;this.src='https://crafatar.com/renders/body/c06f89064c8a49119c29ea1dbd1aab82?overlay&default=MHF_Steve';"
+        src="pixelart/Alyshax.png"
+        alt="Alyshax Render"
       />
       <div class="skin-name">(MOD) KAALYSHA</div>
       <div class="skin-tag">STAFFING ON AKUMAMC</div>
