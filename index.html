@@ -894,6 +894,46 @@
   .status-server {
     color: #ff9a2e;
   }
+  .status-ip {
+    display: block;
+    margin-top: 8px;
+    padding: 6px 16px;
+    background: rgba(26,16,40,0.8);
+    border: 2px solid var(--obsidian-light);
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    color: var(--ender-eye-dim);
+    letter-spacing: 1px;
+    position: relative;
+    transition: all 0.2s;
+  }
+  .status-ip:hover {
+    border-color: var(--ender-eye);
+    color: var(--ender-eye);
+    box-shadow: 0 0 10px rgba(46,232,187,0.2);
+  }
+  .status-ip .copy-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--obsidian);
+    border: 2px solid var(--ender-eye);
+    padding: 5px 10px;
+    font-size: 7px;
+    color: var(--ender-eye);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .status-ip:hover .copy-tooltip {
+    opacity: 1;
+  }
+  .status-ip.copied {
+    border-color: var(--ender-eye);
+    color: var(--ender-eye);
+  }
 </style>
 </head>
 <body>
@@ -935,6 +975,10 @@
   <div class="status-badge">
     <div class="status-dot"></div>
     CURRENTLY ACTIVE ON: <span class="status-server">AKUMAMC</span>
+  </div>
+  <div class="status-ip" onclick="navigator.clipboard.writeText('play.akumamc.net');this.querySelector('.copy-tooltip').textContent='COPIED!';setTimeout(()=>this.querySelector('.copy-tooltip').textContent='CLICK TO COPY IP',1500)">
+    <span class="copy-tooltip">CLICK TO COPY IP</span>
+    (play.akumamc.net)
   </div>
   <div class="scroll-indicator">▼</div>
 </section>
@@ -987,7 +1031,8 @@
     <div class="staff-card">
       <div class="staff-header">
         <img class="staff-logo" src="zenpvp.png" alt="ZenPvP Logo">
-        <div class="staff-server">ZenPvP</div>
+        <div class="staff-server" style="color: #3adf8f">ZenPvP</div>
+        <h4>play.zenpvp.net</h4>
       </div>
       <div class="staff-role-flow">
         <span class="role-badge helper">HELPER</span>
@@ -1002,6 +1047,7 @@
       <div class="staff-header">
         <img class="staff-logo" src="hexedmc.png" alt="HexedMC Logo">
         <div class="staff-server">HexedMC</div>
+        <h4>play.hexedmc.net</h4>
       </div>
       <div class="staff-role-flow">
         <span class="role-badge helper">HELPER</span>
@@ -1015,7 +1061,7 @@
     <div class="staff-card">
       <div class="staff-header">
         <img class="staff-logo" src="pvpville.png" alt="PvPVille Logo">
-        <div class="staff-server">PvPVille</div>
+        <div class="staff-server" style="color: #27F5D6">PvPVille</div>
       </div>
       <div class="staff-role-flow">
         <span class="role-badge player">PLAYER</span>
@@ -1030,7 +1076,8 @@
     <div class="staff-card">
       <div class="staff-header">
         <img class="staff-logo" src="akumamc.png" alt="AkumaMC Logo">
-        <div class="staff-server">AkumaMC</div>
+        <div class="staff-server" style="color: #fac83f">AkumaMC</div>
+        <h4>play.akumamc.net</h4>
       </div>
       <div class="staff-role-flow">
         <span class="role-badge helper">HELPER</span>
