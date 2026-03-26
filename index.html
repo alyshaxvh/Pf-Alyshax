@@ -111,6 +111,29 @@
     text-shadow: 0 0 10px rgba(46,232,187,0.4);
   }
 
+  /* ═══ HAMBURGER MENU ═══ */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: 2px solid var(--obsidian-light);
+    padding: 8px;
+    cursor: pointer;
+    z-index: 1001;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 3px;
+    background: var(--end-lavender);
+    transition: all 0.3s;
+  }
+  .hamburger:hover span {
+    background: var(--ender-eye);
+  }
+
   /* ═══ HERO ═══ */
   .hero {
     min-height: 100vh;
@@ -632,12 +655,31 @@
   /* ═══ RESPONSIVE ═══ */
   @media (max-width: 768px) {
     .about-container { grid-template-columns: 1fr; justify-items: center; }
-    .nav-links a { padding: 8px 10px; font-size: 8px; }
     .nav-logo { font-size: 11px; }
     .staff-role-flow { justify-content: center; }
     .apps-grid { grid-template-columns: repeat(2, 1fr); }
     .reviews-grid { grid-template-columns: 1fr; }
     .discord-links { flex-direction: column; align-items: center; }
+
+    .hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: rgba(10,6,18,0.97);
+      border-bottom: 3px solid var(--obsidian-light);
+      padding: 12px 0;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a {
+      padding: 14px 24px;
+      font-size: 10px;
+      border-bottom: 1px solid var(--obsidian-light);
+    }
+    .nav-links a:last-child { border-bottom: none; }
   }
 
   /* ═══ VOID TEXTURE ═══ */
@@ -675,12 +717,15 @@
 <nav>
   <div class="nav-inner">
     <div class="nav-logo">ALYSHAX<span class="blink">_</span></div>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
     <div class="nav-links">
-      <a href="#about">ABOUT</a>
-      <a href="#staffing">STAFFING</a>
-      <a href="#showcases">SHOWCASES</a>
-      <a href="#reviews">REVIEWS</a>
-      <a href="#contact">CONTACT</a>
+      <a href="#about" onclick="document.querySelector('.nav-links').classList.remove('open')">ABOUT</a>
+      <a href="#staffing" onclick="document.querySelector('.nav-links').classList.remove('open')">STAFFING</a>
+      <a href="#showcases" onclick="document.querySelector('.nav-links').classList.remove('open')">SHOWCASES</a>
+      <a href="#reviews" onclick="document.querySelector('.nav-links').classList.remove('open')">REVIEWS</a>
+      <a href="#contact" onclick="document.querySelector('.nav-links').classList.remove('open')">CONTACT</a>
     </div>
   </div>
 </nav>
