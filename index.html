@@ -827,6 +827,73 @@
     pointer-events: none;
     z-index: 9998;
   }
+  /* ═══ CUSTOM PIXEL CURSOR ═══ */
+  * {
+    cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="2" height="2" fill="%239b30ff"/><rect x="2" y="2" width="2" height="2" fill="%239b30ff"/><rect x="4" y="4" width="2" height="2" fill="%239b30ff"/><rect x="6" y="6" width="2" height="2" fill="%239b30ff"/><rect x="8" y="8" width="2" height="2" fill="%239b30ff"/><rect x="0" y="2" width="2" height="2" fill="%23c77dff"/><rect x="0" y="4" width="2" height="2" fill="%23c77dff"/><rect x="0" y="6" width="2" height="2" fill="%23c77dff"/><rect x="0" y="8" width="2" height="2" fill="%23c77dff"/><rect x="0" y="10" width="2" height="2" fill="%23c77dff"/><rect x="2" y="10" width="2" height="2" fill="%23c77dff"/><rect x="4" y="8" width="2" height="2" fill="%23c77dff"/><rect x="2" y="6" width="2" height="2" fill="%236a0dad"/><rect x="4" y="6" width="2" height="2" fill="%236a0dad"/><rect x="2" y="4" width="2" height="2" fill="%236a0dad"/><rect x="6" y="8" width="2" height="2" fill="%236a0dad"/></svg>') 0 0, auto;
+  }
+  a, button, .hero-cta, .hamburger, .nav-dropdown-toggle {
+    cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="2" height="2" fill="%232ee8bb"/><rect x="2" y="2" width="2" height="2" fill="%232ee8bb"/><rect x="4" y="4" width="2" height="2" fill="%232ee8bb"/><rect x="6" y="6" width="2" height="2" fill="%232ee8bb"/><rect x="8" y="8" width="2" height="2" fill="%232ee8bb"/><rect x="0" y="2" width="2" height="2" fill="%231aad85"/><rect x="0" y="4" width="2" height="2" fill="%231aad85"/><rect x="0" y="6" width="2" height="2" fill="%231aad85"/><rect x="0" y="8" width="2" height="2" fill="%231aad85"/><rect x="0" y="10" width="2" height="2" fill="%231aad85"/><rect x="2" y="10" width="2" height="2" fill="%231aad85"/><rect x="4" y="8" width="2" height="2" fill="%231aad85"/><rect x="2" y="6" width="2" height="2" fill="%23178a6a"/><rect x="4" y="6" width="2" height="2" fill="%23178a6a"/><rect x="2" y="4" width="2" height="2" fill="%23178a6a"/><rect x="6" y="8" width="2" height="2" fill="%23178a6a"/></svg>') 0 0, pointer;
+  }
+
+  /* ═══ SCROLL TO TOP ═══ */
+  .scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 44px;
+    height: 44px;
+    background: var(--obsidian);
+    border: 3px solid var(--obsidian-light);
+    color: var(--end-lavender);
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 997;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s;
+  }
+  .scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .scroll-top:hover {
+    border-color: var(--ender-eye);
+    color: var(--ender-eye);
+    box-shadow: 0 0 15px rgba(46,232,187,0.3);
+    transform: translateY(-3px);
+  }
+
+  /* ═══ STATUS BADGE ═══ */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 24px;
+    padding: 10px 20px;
+    background: rgba(26,16,40,0.8);
+    border: 2px solid var(--obsidian-light);
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    background: #2ee8bb;
+    box-shadow: 0 0 8px rgba(46,232,187,0.6);
+    animation: statusPulse 2s ease-in-out infinite;
+  }
+  @keyframes statusPulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(46,232,187,0.6); }
+    50% { opacity: 0.5; box-shadow: 0 0 4px rgba(46,232,187,0.3); }
+  }
+  .status-server {
+    color: #ff9a2e;
+  }
 </style>
 </head>
 <body>
@@ -849,7 +916,7 @@
       <div class="nav-dropdown">
         <button class="nav-dropdown-toggle">STAFFING</button>
         <div class="nav-dropdown-menu">
-          <a href="#staffing" onclick="document.querySelector('.nav-links').classList.remove('open')">STAFFING</a>
+          <a href="#staffing" onclick="document.querySelector('.nav-links').classList.remove('open')">STAFFING EXPERIENCE</a>
           <a href="#reviews" onclick="document.querySelector('.nav-links').classList.remove('open')">STAFFING REVIEWS</a>
         </div>
       </div>
@@ -865,8 +932,15 @@
   <div class="hero-title">ALYSHAX</div>
   <div class="hero-subtitle">⬥ Welcome To My Portfolio ⬥</div>
   <a href="#about" class="hero-cta">WOOOSH!</a>
+  <div class="status-badge">
+    <div class="status-dot"></div>
+    CURRENTLY ACTIVE ON: <span class="status-server">AKUMAMC</span>
+  </div>
   <div class="scroll-indicator">▼</div>
 </section>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">▲</button>
 
 <!-- ABOUT ME -->
 <section id="about">
@@ -1122,6 +1196,12 @@
       }
     });
   }, { threshold: 0.1 });
+
+  // ═══ SCROLL TO TOP BUTTON ═══
+  const scrollTopBtn = document.querySelector('.scroll-top');
+  window.addEventListener('scroll', () => {
+    scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+  });
 
   document.querySelectorAll('.staff-card, .app-card, .contact-card, .skin-card, .about-text').forEach(el => {
     el.style.opacity = '0';
