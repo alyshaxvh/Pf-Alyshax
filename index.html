@@ -1,1024 +1,480 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alyshax's Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --end-void: #0a0612;
-    --end-deep: #110b1f;
-    --end-purple: #6a0dad;
-    --end-magenta: #9b30ff;
-    --end-lavender: #c77dff;
-    --end-pink: #e0aaff;
-    --end-white: #f0e6ff;
-    --endstone: #d9c98b;
-    --endstone-dim: #a89a5b;
-    --obsidian: #1a1028;
-    --obsidian-light: #2a1a3e;
-    --chorus: #b044c0;
-    --ender-eye: #2ee8bb;
-    --ender-eye-dim: #1aad85;
-    --dragon-purple: #7b2d8e;
-    --text-primary: #e8dff5;
-    --text-dim: #9a8bb5;
-    --yellow-rank: #e5ff00;
-    --lightblue-rank: #33c7d1;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alyshax · Portfolio & Services</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --end-void: #0a0612;
+      --end-deep: #110b1f;
+      --end-purple: #6a0dad;
+      --end-magenta: #9b30ff;
+      --end-lavender: #c77dff;
+      --end-pink: #e0aaff;
+      --end-white: #f0e6ff;
+      --obsidian: #1a1028;
+      --obsidian-light: #2a1a3e;
+      --chorus: #b044c0;
+      --ender-eye: #2ee8bb;
+      --ender-eye-dim: #1aad85;
+      --dragon-purple: #7b2d8e;
+      --text-primary: #e8dff5;
+      --text-dim: #9a8bb5;
+      --yellow-rank: #e5ff00;
+      --lightblue-rank: #33c7d1;
+    }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; image-rendering: pixelated; }
 
-  html {
-    scroll-behavior: smooth;
-    image-rendering: pixelated;
-  }
+    body {
+      background: var(--end-void);
+      color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
 
-  body {
-    background: var(--end-void);
-    color: var(--text-primary);
-    font-family: 'VT323', monospace;
-    overflow-x: hidden;
-  }
+    /* STAR FIELD */
+    #stars-canvas {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+    }
 
-  /* ═══ STAR FIELD CANVAS ═══ */
-  #stars-canvas {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 0;
-  }
+    /* VOID GRID */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(106,13,173,0.04) 39px, rgba(106,13,173,0.04) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(106,13,173,0.04) 39px, rgba(106,13,173,0.04) 40px);
+      pointer-events: none; z-index: 0;
+    }
 
-  /* ═══ END PORTAL BORDER ═══ */
-  .portal-border {
-    position: fixed;
-    bottom: 0; left: 0;
-    width: 100%; height: 5px;
-    background: linear-gradient(90deg, var(--ender-eye), var(--end-magenta), var(--chorus), var(--ender-eye));
-    background-size: 300% 100%;
-    animation: portalFlow 5s linear infinite;
-    z-index: 1000;
-    box-shadow: 0 -4px 25px rgba(46, 232, 187, 0.3);
-  }
-  @keyframes portalFlow {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 300% 50%; }
-  }
+    /* SCANLINES */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(transparent, transparent 2px, rgba(0,0,0,0.015) 2px, rgba(0,0,0,0.015) 4px);
+      pointer-events: none; z-index: 9998;
+    }
 
-  /* ═══ NAVIGATION ═══ */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 999;
-    background: linear-gradient(180deg, rgba(10,6,18,0.97) 0%, rgba(10,6,18,0.85) 100%);
-    backdrop-filter: blur(10px);
-    border-bottom: 3px solid var(--obsidian-light);
-    padding: 0 24px;
-  }
-  .nav-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 64px;
-  }
-  .nav-logo {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 14px;
-    color: var(--end-lavender);
-    text-shadow: 2px 2px 0 var(--end-purple), 0 0 20px rgba(155,48,255,0.4);
-  }
-  .nav-logo .blink { animation: blink 1.2s step-end infinite; }
-  @keyframes blink { 50% { opacity: 0; } }
-  .nav-links { display: flex; gap: 8px; align-items: center; }
-  .nav-links a {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 9px;
-    color: var(--text-dim);
-    text-decoration: none;
-    padding: 8px 16px;
-    border: 2px solid transparent;
-    transition: all 0.2s;
-  }
-  .nav-links a:hover {
-    color: var(--ender-eye);
-    border-color: var(--obsidian-light);
-    background: rgba(106,13,173,0.15);
-    text-shadow: 0 0 10px rgba(46,232,187,0.4);
-  }
+    /* PORTAL BORDER */
+    .portal-border {
+      position: fixed; bottom: 0; left: 0;
+      width: 100%; height: 5px;
+      background: linear-gradient(90deg, var(--ender-eye), var(--end-magenta), var(--chorus), var(--ender-eye));
+      background-size: 300% 100%;
+      animation: portalFlow 5s linear infinite;
+      z-index: 1000;
+      box-shadow: 0 -4px 25px rgba(46,232,187,0.3);
+    }
+    @keyframes portalFlow { 0%{background-position:0% 50%} 100%{background-position:300% 50%} }
 
-  /* ═══ NAV DROPDOWN ═══ */
-  .nav-dropdown {
-    position: relative;
-  }
-  .nav-dropdown > .nav-dropdown-toggle {
-    cursor: pointer;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 9px;
-    color: var(--text-dim);
-    text-decoration: none;
-    padding: 8px 16px;
-    border: 2px solid transparent;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    background: none;
-  }
-  .nav-dropdown > .nav-dropdown-toggle::after {
-    content: '▼';
-    font-size: 6px;
-    transition: transform 0.2s;
-  }
-  .nav-dropdown:hover > .nav-dropdown-toggle::after {
-    transform: rotate(180deg);
-  }
-  .nav-dropdown:hover > .nav-dropdown-toggle {
-    color: var(--ender-eye);
-    border-color: var(--obsidian-light);
-    background: rgba(106,13,173,0.15);
-    text-shadow: 0 0 10px rgba(46,232,187,0.4);
-  }
-  .nav-dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    min-width: 180px;
-    background: rgba(10,6,18,0.97);
-    border: 2px solid var(--obsidian-light);
-    backdrop-filter: blur(10px);
-    z-index: 1002;
-    padding: 4px 0;
-  }
-  .nav-dropdown:hover .nav-dropdown-menu {
-    display: flex;
-    flex-direction: column;
-  }
-  .nav-dropdown-menu a {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 9px;
-    color: var(--text-dim);
-    text-decoration: none;
-    padding: 10px 16px;
-    border: none !important;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-  .nav-dropdown-menu a:hover {
-    color: var(--ender-eye);
-    background: rgba(106,13,173,0.15);
-    text-shadow: 0 0 10px rgba(46,232,187,0.4);
-  }
+    /* CURSORS */
+    * { cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="2" height="2" fill="%239b30ff"/><rect x="2" y="2" width="2" height="2" fill="%239b30ff"/><rect x="4" y="4" width="2" height="2" fill="%239b30ff"/><rect x="6" y="6" width="2" height="2" fill="%239b30ff"/><rect x="8" y="8" width="2" height="2" fill="%239b30ff"/><rect x="0" y="2" width="2" height="2" fill="%23c77dff"/><rect x="0" y="4" width="2" height="2" fill="%23c77dff"/><rect x="0" y="6" width="2" height="2" fill="%23c77dff"/><rect x="0" y="8" width="2" height="2" fill="%23c77dff"/><rect x="0" y="10" width="2" height="2" fill="%23c77dff"/><rect x="2" y="10" width="2" height="2" fill="%23c77dff"/><rect x="4" y="8" width="2" height="2" fill="%23c77dff"/><rect x="2" y="6" width="2" height="2" fill="%236a0dad"/><rect x="4" y="6" width="2" height="2" fill="%236a0dad"/><rect x="2" y="4" width="2" height="2" fill="%236a0dad"/><rect x="6" y="8" width="2" height="2" fill="%236a0dad"/></svg>') 0 0, auto; }
+    a, button { cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="2" height="2" fill="%232ee8bb"/><rect x="2" y="2" width="2" height="2" fill="%232ee8bb"/><rect x="4" y="4" width="2" height="2" fill="%232ee8bb"/><rect x="6" y="6" width="2" height="2" fill="%232ee8bb"/><rect x="8" y="8" width="2" height="2" fill="%232ee8bb"/><rect x="0" y="2" width="2" height="2" fill="%231aad85"/><rect x="0" y="4" width="2" height="2" fill="%231aad85"/><rect x="0" y="6" width="2" height="2" fill="%231aad85"/><rect x="0" y="8" width="2" height="2" fill="%231aad85"/><rect x="0" y="10" width="2" height="2" fill="%231aad85"/><rect x="2" y="10" width="2" height="2" fill="%231aad85"/><rect x="4" y="8" width="2" height="2" fill="%231aad85"/><rect x="2" y="6" width="2" height="2" fill="%23178a6a"/><rect x="4" y="6" width="2" height="2" fill="%23178a6a"/><rect x="2" y="4" width="2" height="2" fill="%23178a6a"/><rect x="6" y="8" width="2" height="2" fill="%23178a6a"/></svg>') 0 0, pointer; }
 
-  /* ═══ HAMBURGER MENU ═══ */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-    background: none;
-    border: 2px solid var(--obsidian-light);
-    padding: 8px;
-    cursor: pointer;
-    z-index: 1001;
-  }
-  .hamburger span {
-    display: block;
-    width: 22px;
-    height: 3px;
-    background: var(--end-lavender);
-    transition: all 0.3s;
-  }
-  .hamburger:hover span {
-    background: var(--ender-eye);
-  }
-
-  .hero-showcase {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-    margin-bottom: 20px;
-  }
-  .hero-skull {
-    width: 200px;
-    height: 200px;
-    image-rendering: pixelated;
-    filter: drop-shadow(0 0 20px rgba(155,48,255,0.5));
-    animation: skinFloat 4s ease-in-out infinite;
-  }
-  .hero-art-frame {
-    position: relative;
-    padding: 6px;
-    background: linear-gradient(135deg, var(--end-purple), var(--ender-eye), var(--end-magenta));
-    animation: skinFloat 4s ease-in-out infinite;
-    animation-delay: -1s;
-  }
-  .hero-art-frame::before {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    background: linear-gradient(135deg, var(--ender-eye), var(--end-magenta), var(--end-purple), var(--ender-eye));
-    background-size: 300% 300%;
-    animation: portalFlow 5s linear infinite;
-    z-index: -1;
-    opacity: 0.5;
-    filter: blur(8px);
-  }
-  .hero-art-inner {
-    background: var(--obsidian);
-    padding: 8px;
-    border: 2px solid var(--obsidian-light);
-  }
-  .hero-art {
-    width: 160px;
-    height: 160px;
-    image-rendering: pixelated;
-    display: block;
-  }
-
-  /* ═══ HERO ═══ */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    text-align: center;
-    padding: 100px 24px 60px;
-  }
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse at 50% 70%, rgba(106,13,173,0.15) 0%, transparent 60%),
-      radial-gradient(ellipse at 20% 30%, rgba(46,232,187,0.06) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 20%, rgba(155,48,255,0.08) 0%, transparent 50%);
-    z-index: -1;
-  }
-  .hero-title {
-    font-family: 'Press Start 2P', cursive;
-    font-size: clamp(28px, 6vw, 60px);
-    color: var(--end-lavender);
-    text-shadow:
-      3px 3px 0 var(--end-purple),
-      6px 6px 0 rgba(0,0,0,0.5),
-      0 0 40px rgba(155,48,255,0.3);
-    margin-bottom: 20px;
-    animation: titleGlow 4s ease-in-out infinite;
-    line-height: 1.4;
-  }
-  @keyframes titleGlow {
-    0%, 100% { filter: brightness(1); text-shadow: 3px 3px 0 var(--end-purple), 6px 6px 0 rgba(0,0,0,0.5), 0 0 40px rgba(155,48,255,0.3); }
-    50% { filter: brightness(1.1); text-shadow: 3px 3px 0 var(--end-purple), 6px 6px 0 rgba(0,0,0,0.5), 0 0 60px rgba(155,48,255,0.5); }
-  }
-  .hero-subtitle {
-    font-size: 28px;
-    color: var(--text-dim);
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    margin-bottom: 40px;
-  }
-  .hero-cta {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 12px;
-    color: var(--end-void);
-    background: linear-gradient(180deg, var(--ender-eye) 0%, var(--ender-eye-dim) 100%);
-    border: none;
-    padding: 16px 32px;
-    cursor: pointer;
-    text-decoration: none;
-    box-shadow:
-      0 4px 0 var(--dragon-purple),
-      0 8px 20px rgba(46,232,187,0.25);
-    transition: all 0.15s;
-  }
-  .hero-cta:hover {
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 var(--dragon-purple), 0 4px 10px rgba(46,232,187,0.4);
-  }
-  .hero-cta:active { transform: translateY(4px); box-shadow: none; }
-
-  .scroll-indicator {
-    position: absolute;
-    bottom: 40px;
-    animation: float 2s ease-in-out infinite;
-    font-size: 24px;
-    color: var(--end-magenta);
-    opacity: 0.5;
-  }
-  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
-
-  /* ═══ SECTION STYLING ═══ */
-  section {
-    position: relative;
-    z-index: 1;
-    padding: 100px 24px;
-  }
-  .section-header {
-    text-align: center;
-    margin-bottom: 60px;
-  }
-  .section-header h2 {
-    font-family: 'Press Start 2P', cursive;
-    font-size: clamp(16px, 3vw, 28px);
-    color: var(--ender-eye);
-    text-shadow: 2px 2px 0 var(--end-purple), 0 0 20px rgba(46,232,187,0.2);
-    margin-bottom: 12px;
-  }
-  .section-header .divider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    color: var(--end-magenta);
-    font-size: 14px;
-  }
-  .section-header .divider::before,
-  .section-header .divider::after {
-    content: '';
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, var(--end-purple), transparent);
-  }
-
-  /* ═══ ABOUT ME ═══ */
-  #about {
-    background: linear-gradient(180deg, transparent, rgba(151, 52, 175, 0.15) 50%, transparent);
-  }
-  .about-container {
-    max-width: 900px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    gap: 48px;
-    align-items: start;
-  }
-  .skin-card {
-    background: var(--end-lavender);
-    padding: 24px;
-    text-align: center;
-    position: relative;
-    border: 3px solid transparent;
-    background-clip: padding-box;
-  }
-  .skin-card::before {
-    content: '';
-    position: absolute;
-    inset: -3px;
-    background: linear-gradient(135deg, var(--end-lavender), var(--dragon-purple), var(--ender-eye-dim), var(--ender-eye));
-    background-size: 300% 300%;
-    animation: borderSpin 5s linear infinite;
-    z-index: -1;
-  }
-  .skin-card::after {
-    content: '';
-    position: absolute;
-    inset: -6px;
-    background: linear-gradient(135deg, var(--ender-eye), var(--end-magenta), var(--end-purple), var(--ender-eye));
-    background-size: 300% 300%;
-    animation: borderSpin 5s linear infinite;
-    z-index: -2;
-    opacity: 0.4;
-    filter: blur(12px);
-  }
-  @keyframes borderSpin {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  .skin-render {
-    width: 220px;
-    height: 220px;
-    object-fit: cover;
-    margin: 0 auto 16px;
-    animation: skinFloat 4s ease-in-out infinite;
-    filter: drop-shadow(0 10px 25px rgba(106,13,173,0.5));
-    border: 2px solid var(--obsidian-light);
-  }
-  @keyframes skinFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
-  .skin-name {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 14px;
-    color: var(--end-lavender);
-    text-shadow: 1px 1px 0 var(--end-purple);
-    margin-bottom: 4px;
-  }
-  .skin-tag {
-    font-size: 18px;
-    color: var(--text-dim);
-    letter-spacing: 2px;
-  }
-  .about-text { padding-top: 8px; }
-  .about-text h3 {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 14px;
-    color: var(--ender-eye);
-    margin-bottom: 20px;
-  }
-  .about-text p {
-    font-size: 22px;
-    line-height: 1.7;
-    color: var(--text-primary);
-    margin-bottom: 20px;
-  }
-
-  /* ═══ STAFFING EXPERIENCE ═══ */
-  #staffing {
-    background: linear-gradient(180deg, transparent, rgba(106,13,173,0.06) 50%, transparent);
-  }
-  .staffing-grid {
-    max-width: 900px;
-    margin: 0 auto;
-    display: grid;
-    gap: 24px;
-  }
-  .staff-card {
-    background: var(--obsidian);
-    border: 3px solid var(--obsidian-light);
-    padding: 28px 32px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s;
-  }
-  .staff-card:hover {
-    border-color: var(--end-magenta);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(155,48,255,0.15);
-  }
-  .staff-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 4px; height: 100%;
-    background: linear-gradient(180deg, var(--ender-eye), var(--end-magenta));
-  }
-  .staff-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 16px;
-  }
-  .staff-logo {
-    width: 140px;
-    height: 140px;
-    object-fit: contain;
-    filter: drop-shadow(0 0 8px rgba(155,48,255,0.3));
-  }
-  .staff-server {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 16px;
-    color: var(--end-lavender);
-    text-shadow: 0 0 10px rgba(199,125,255,0.3);
-  }
-  .staff-role-flow {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    font-size: 22px;
-  }
-  .role-badge {
-    padding: 6px 16px;
-    border: 2px solid;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 10px;
-    position: relative;
-  }
-  .role-badge.helper {
-    color: var(--yellow-rank);
-    border-color: var(--yellow-rank);
-    background: rgba(255,215,0,0.08);
-    text-shadow: 0 0 8px rgba(255,215,0,0.3);
-  }
-  .role-badge.mod {
-    color: var(--lightblue-rank);
-    border-color: var(--lightblue-rank);
-    background: rgba(91,206,250,0.08);
-    text-shadow: 0 0 8px rgba(91,206,250,0.3);
-  }
-  .role-badge.sr-mod {
-    color: var(--lightblue-rank);
-    border-color: var(--lightblue-rank);
-    background: rgba(91,206,250,0.08);
-    text-shadow: 0 0 8px rgba(91,206,250,0.3);
-  }
-  .role-arrow {
-    color: var(--end-magenta);
-    font-family: 'Press Start 2P', cursive;
-    font-size: 14px;
-    animation: arrowPulse 2s ease-in-out infinite;
-  }
-  @keyframes arrowPulse {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-  }
-  .staff-desc {
-    font-size: 20px;
-    color: var(--text-dim);
-    line-height: 1.5;
-    margin-top: 14px;
-  }
-  .staff-started {
-    font-size: 16px;
-    color: var(--text-dim);
-    margin-top: 10px;
-    font-style: italic;
-  }
-
-  /* ═══ SHOWCASES ═══ */
-  #showcases {
-    background: linear-gradient(180deg, transparent, rgba(42,26,62,0.1) 50%, transparent);
-  }
-  .apps-grid {
-    max-width: 900px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-  }
-  .app-card {
-    background: var(--obsidian);
-    border: 3px solid var(--obsidian-light);
-    padding: 20px;
-    text-align: center;
-    transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
-  }
-  .pixel-art-img {
-    width: 128px;
-    height: 128px;
-    image-rendering: pixelated;
-    margin: 0 auto 12px;
-    display: block;
-  }
-  .pixel-art-label {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 9px;
-    color: var(--end-lavender);
-    margin-top: 8px;
-  }
-  .app-card:hover {
-    border-color: var(--ender-eye);
-    transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(46,232,187,0.15);
-  }
-  .app-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 20%; right: 20%;
-    height: 3px;
-    background: var(--end-magenta);
-    box-shadow: 0 0 10px rgba(155,48,255,0.4);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .app-card:hover::after { opacity: 1; }
-  .app-icon {
-    font-size: 40px;
-    margin-bottom: 16px;
-    display: block;
-  }
-  .app-name {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 12px;
-    color: var(--ender-eye);
-    margin-bottom: 10px;
-  }
-  .app-desc {
-    font-size: 20px;
-    color: var(--text-dim);
-    line-height: 1.5;
-  }
-  .app-card-wide {
-    width: 100%;
-  }
-  .app-layout {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-    justify-content: flex-start;
-  }
-  .app-info {
-    text-align: left;
-  }
-  .app-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    padding: 0;
-  }
-  .app-placeholder .placeholder-icon {
-    width: 60px; height: 60px;
-    border: 3px dashed var(--obsidian-light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    color: var(--text-dim);
-  }
-  .app-logo {
-    width: 400px;
-    height: auto;
-    object-fit: contain;
-    flex-shrink: 0;
-    filter: drop-shadow(0 0 10px rgba(155,48,255,0.4));
-  }
-
-  /* ═══ REVIEWS ═══ */
-  #reviews {
-    background: linear-gradient(180deg, transparent, rgba(106,13,173,0.06) 50%, transparent);
-  }
-  .reviews-grid {
-    max-width: 900px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-  .review-card {
-    background: var(--obsidian);
-    border: 3px solid var(--obsidian-light);
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s;
-  }
-  .review-card:hover {
-    border-color: var(--end-magenta);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 24px rgba(155,48,255,0.15);
-  }
-  .review-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 3px;
-    background: linear-gradient(90deg, var(--ender-eye), var(--end-magenta));
-  }
-  .review-stars {
-    color: var(--yellow-rank);
-    font-size: 18px;
-    letter-spacing: 2px;
-    margin-bottom: 12px;
-  }
-  .review-text {
-    font-size: 20px;
-    color: var(--text-primary);
-    line-height: 1.6;
-    margin-bottom: 16px;
-    font-style: italic;
-  }
-  .review-author {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 10px;
-    color: var(--ender-eye);
-  }
-  .review-role {
-    font-size: 16px;
-    color: var(--text-dim);
-    margin-top: 4px;
-  }
-  .review-discord {
-    font-size: 15px;
-    color: var(--ender-eye-dim);
-    text-decoration: none;
-    margin-top: 6px;
-    display: inline-block;
-    transition: color 0.2s;
-  }
-  .review-discord:hover {
-    color: var(--ender-eye);
-    text-decoration: underline;
-  }
-  /* Akuma theme — orange/yellow */
-  .review-akuma .review-text { color: #ffcc44; }
-  .review-akuma .review-author { color: #ff9a2e; }
-  .review-akuma .review-role { color: #e8a840; }
-  .review-akuma .review-discord { color: #cc7a20; }
-  .review-akuma .review-discord:hover { color: #ffcc44; }
-  .review-akuma:hover { border-color: #ff9a2e; box-shadow: 0 6px 24px rgba(255,154,46,0.2); }
-  .review-akuma::before { background: linear-gradient(90deg, #ff9a2e, #ffcc44); }
-  .review-akuma .review-logo { filter: drop-shadow(0 0 15px rgba(255,154,46,0.4)); }
-
-  /* Hexed theme — purple */
-  .review-hexed .review-text { color: #c77dff; }
-  .review-hexed .review-author { color: #9b30ff; }
-  .review-hexed .review-role { color: #b065e0; }
-  .review-hexed .review-discord { color: #7b2d8e; }
-  .review-hexed .review-discord:hover { color: #c77dff; }
-  .review-hexed:hover { border-color: #9b30ff; box-shadow: 0 6px 24px rgba(155,48,255,0.2); }
-  .review-hexed::before { background: linear-gradient(90deg, #9b30ff, #c77dff); }
-
-  .review-logo {
-    width: 200px;
-    height: 200px;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto 16px;
-    filter: drop-shadow(0 0 15px rgba(155,48,255,0.3));
-    image-rendering: pixelated;
-  }
-
-  /* ═══ CONTACT ═══ */
-  #contact {
-    background: linear-gradient(180deg, transparent, rgba(106,13,173,0.06) 50%, transparent);
-    padding-bottom: 140px;
-  }
-  .contact-container {
-    max-width: 500px;
-    margin: 0 auto;
-  }
-  .contact-card {
-    background: var(--obsidian);
-    border: 3px solid var(--obsidian-light);
-    padding: 36px 32px;
-    text-align: center;
-    transition: all 0.3s;
-    cursor: pointer;
-    text-decoration: none;
-    display: block;
-    position: relative;
-    overflow: hidden;
-  }
-  .contact-card:hover {
-    border-color: var(--end-magenta);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 24px rgba(155,48,255,0.2);
-  }
-  .contact-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--ender-eye), var(--end-magenta), var(--ender-eye));
-  }
-  .contact-icon {
-    font-size: 44px;
-    margin-bottom: 16px;
-    display: block;
-  }
-  .contact-label {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 12px;
-    color: var(--ender-eye);
-    margin-bottom: 8px;
-  }
-  .contact-value {
-    font-size: 24px;
-    color: var(--text-primary);
-    margin-bottom: 6px;
-  }
-  .contact-sub {
-    font-size: 18px;
-    color: var(--text-dim);
-  }
-  .discord-links {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  .discord-btn {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 9px;
-    padding: 10px 20px;
-    border: 2px solid var(--end-magenta);
-    background: rgba(155,48,255,0.1);
-    color: var(--end-lavender);
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-  .discord-btn:hover {
-    background: rgba(155,48,255,0.25);
-    border-color: var(--ender-eye);
-    color: var(--ender-eye);
-  }
-
-  /* ═══ FOOTER ═══ */
-  footer {
-    text-align: center;
-    padding: 30px;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 8px;
-    color: var(--text-dim);
-    border-top: 3px solid var(--obsidian-light);
-    position: relative;
-    z-index: 1;
-  }
-
-  /* ═══ RESPONSIVE ═══ */
-  @media (max-width: 768px) {
-    .about-container { grid-template-columns: 1fr; justify-items: center; }
-    .nav-logo { font-size: 11px; }
-    .staff-role-flow { justify-content: center; }
-    .apps-grid { grid-template-columns: repeat(2, 1fr); }
-    .reviews-grid { grid-template-columns: 1fr; }
-    .discord-links { flex-direction: column; align-items: center; }
-
-    .hamburger { display: flex; }
-    .nav-links {
-      display: none;
-      position: absolute;
-      top: 64px;
-      left: 0;
-      right: 0;
-      flex-direction: column;
-      background: rgba(10,6,18,0.97);
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      background: linear-gradient(180deg, rgba(10,6,18,0.97) 0%, rgba(10,6,18,0.85) 100%);
+      backdrop-filter: blur(10px);
       border-bottom: 3px solid var(--obsidian-light);
-      padding: 12px 0;
+      padding: 0 24px;
     }
-    .nav-links.open { display: flex; }
-    .nav-links a {
-      padding: 14px 24px;
-      font-size: 10px;
-      border-bottom: 1px solid var(--obsidian-light);
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
     }
-    .nav-links a:last-child { border-bottom: none; }
-
-    .nav-dropdown { width: 100%; }
-    .nav-dropdown > .nav-dropdown-toggle {
-      padding: 14px 24px;
-      font-size: 10px;
-      border-bottom: 1px solid var(--obsidian-light);
-      width: 100%;
+    .nav-logo {
+      font-family: 'Press Start 2P', monospace; font-size: 13px;
+      color: var(--end-lavender); text-decoration: none;
+      text-shadow: 2px 2px 0 var(--end-purple), 0 0 20px rgba(155,48,255,0.4);
     }
+    .nav-logo .blink { animation: blink 1.2s step-end infinite; }
+    @keyframes blink { 50%{opacity:0} }
+    .nav-links { display: flex; gap: 4px; align-items: center; }
+    .nav-links > a {
+      font-family: 'Press Start 2P', monospace; font-size: 8px;
+      color: var(--text-dim); text-decoration: none;
+      padding: 8px 12px; border: 2px solid transparent; transition: all 0.2s;
+    }
+    .nav-links > a:hover { color: var(--ender-eye); border-color: var(--obsidian-light); background: rgba(106,13,173,0.15); text-shadow: 0 0 10px rgba(46,232,187,0.4); }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-toggle {
+      font-family: 'Press Start 2P', monospace; font-size: 8px;
+      color: var(--text-dim); background: none; border: 2px solid transparent;
+      padding: 8px 12px; display: flex; align-items: center; gap: 5px; transition: all 0.2s;
+    }
+    .nav-dropdown-toggle::after { content:'▼'; font-size:6px; transition: transform 0.2s; }
+    .nav-dropdown:hover .nav-dropdown-toggle::after { transform: rotate(180deg); }
+    .nav-dropdown:hover .nav-dropdown-toggle { color: var(--ender-eye); border-color: var(--obsidian-light); background: rgba(106,13,173,0.15); }
     .nav-dropdown-menu {
-      position: static;
-      min-width: unset;
-      border: none;
-      background: rgba(17,11,31,0.9);
-      padding: 0;
+      display: none; position: absolute; top: 100%; left: 0;
+      min-width: 190px; background: rgba(10,6,18,0.97);
+      border: 2px solid var(--obsidian-light); backdrop-filter: blur(10px);
+      z-index: 1002; padding: 4px 0; flex-direction: column;
     }
+    .nav-dropdown:hover .nav-dropdown-menu { display: flex; }
     .nav-dropdown-menu a {
-      padding: 12px 24px 12px 40px;
-      font-size: 9px;
-      border-bottom: 1px solid var(--obsidian-light) !important;
+      font-family: 'Press Start 2P', monospace; font-size: 8px;
+      color: var(--text-dim); text-decoration: none; padding: 10px 16px;
+      transition: all 0.2s; white-space: nowrap; border: none !important;
     }
-  }
+    .nav-dropdown-menu a:hover { color: var(--ender-eye); background: rgba(106,13,173,0.15); }
+    .hamburger {
+      display: none; flex-direction: column; justify-content: center; gap: 5px;
+      background: none; border: 2px solid var(--obsidian-light); padding: 8px;
+    }
+    .hamburger span { display: block; width: 22px; height: 3px; background: var(--end-lavender); transition: all 0.3s; }
+    .hamburger:hover span { background: var(--ender-eye); }
 
-  /* ═══ VOID TEXTURE ═══ */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      repeating-linear-gradient(0deg, transparent, transparent 15px, rgba(106,13,173,0.02) 15px, rgba(106,13,173,0.02) 16px),
-      repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(106,13,173,0.02) 15px, rgba(106,13,173,0.02) 16px);
-    pointer-events: none;
-    z-index: 0;
-  }
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      position: relative; text-align: center; padding: 100px 24px 60px; z-index: 1;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 70%, rgba(106,13,173,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 30%, rgba(46,232,187,0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(155,48,255,0.09) 0%, transparent 50%);
+      z-index: -1;
+    }
+    .hero-skull {
+      width: 175px; height: 175px; image-rendering: pixelated;
+      filter: drop-shadow(0 0 24px rgba(155,48,255,0.55));
+      animation: skinFloat 4s ease-in-out infinite; margin-bottom: 20px;
+    }
+    @keyframes skinFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    .hero-title {
+      font-family: 'Press Start 2P', monospace; font-size: clamp(28px,6vw,58px);
+      color: var(--end-lavender); line-height: 1.3; margin-bottom: 14px;
+      text-shadow: 3px 3px 0 var(--end-purple), 6px 6px 0 rgba(0,0,0,0.5), 0 0 40px rgba(155,48,255,0.3);
+      animation: titleGlow 4s ease-in-out infinite;
+    }
+    @keyframes titleGlow {
+      0%,100%{text-shadow:3px 3px 0 var(--end-purple),6px 6px 0 rgba(0,0,0,0.5),0 0 40px rgba(155,48,255,0.3)}
+      50%{text-shadow:3px 3px 0 var(--end-purple),6px 6px 0 rgba(0,0,0,0.5),0 0 60px rgba(155,48,255,0.55)}
+    }
+    .hero-subtitle {
+      font-family: 'VT323', monospace; font-size: 26px;
+      color: var(--text-dim); letter-spacing: 6px;
+      text-transform: uppercase; margin-bottom: 14px;
+    }
+    .hero-tagline {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 2px solid var(--obsidian-light); background: rgba(26,16,40,0.7);
+      padding: 8px 18px; margin-bottom: 26px;
+      font-family: 'Press Start 2P', monospace; font-size: 7px;
+      color: var(--ender-eye); letter-spacing: 0.08em;
+    }
+    .hero-tagline .dot {
+      width: 7px; height: 7px; background: var(--ender-eye);
+      box-shadow: 0 0 8px rgba(46,232,187,0.6); animation: blink 1s step-end infinite;
+    }
+    .btn-row { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-bottom: 26px; }
+    .btn {
+      display: inline-block; font-family: 'Press Start 2P', monospace;
+      font-size: 9px; letter-spacing: 0.07em; padding: 14px 22px;
+      text-decoration: none; transition: all 0.15s; text-transform: uppercase;
+    }
+    .btn-primary {
+      background: linear-gradient(180deg, var(--ender-eye) 0%, var(--ender-eye-dim) 100%);
+      color: #000; box-shadow: 0 4px 0 var(--dragon-purple), 0 8px 20px rgba(46,232,187,0.25);
+    }
+    .btn-primary:hover { transform: translateY(2px); box-shadow: 0 2px 0 var(--dragon-purple), 0 4px 14px rgba(46,232,187,0.4); }
+    .btn-ghost { background: transparent; color: var(--end-lavender); border: 2px solid var(--obsidian-light); }
+    .btn-ghost:hover { border-color: var(--end-magenta); color: var(--end-pink); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(155,48,255,0.25); }
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 10px 20px; background: rgba(26,16,40,0.8);
+      border: 2px solid var(--obsidian-light);
+      font-family: 'Press Start 2P', monospace; font-size: 7px;
+      color: var(--text-dim); letter-spacing: 1px; margin-bottom: 10px;
+    }
+    .status-dot {
+      width: 8px; height: 8px; background: #2ee8bb;
+      box-shadow: 0 0 8px rgba(46,232,187,0.6);
+      animation: statusPulse 2s ease-in-out infinite;
+    }
+    @keyframes statusPulse { 0%,100%{opacity:1;box-shadow:0 0 8px rgba(46,232,187,0.6)} 50%{opacity:0.5;box-shadow:0 0 4px rgba(46,232,187,0.3)} }
+    .status-server { color: #ff9a2e; }
+    .status-ip {
+      display: inline-block; padding: 7px 18px; background: rgba(26,16,40,0.8);
+      border: 2px solid var(--obsidian-light); font-family: 'Press Start 2P', monospace;
+      font-size: 7px; color: var(--ender-eye-dim); letter-spacing: 1px;
+      position: relative; transition: all 0.2s; margin-bottom: 18px;
+    }
+    .status-ip:hover { border-color: var(--ender-eye); color: var(--ender-eye); box-shadow: 0 0 10px rgba(46,232,187,0.2); }
+    .status-ip .copy-tooltip {
+      position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+      background: var(--obsidian); border: 2px solid var(--ender-eye);
+      padding: 5px 10px; font-size: 7px; color: var(--ender-eye);
+      white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s;
+    }
+    .status-ip:hover .copy-tooltip { opacity: 1; }
+    .scroll-indicator {
+      position: absolute; bottom: 36px;
+      animation: floatAnim 2s ease-in-out infinite;
+      font-family: 'VT323', monospace; font-size: 28px; color: var(--end-magenta); opacity: 0.5;
+    }
+    @keyframes floatAnim { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
 
-  /* ═══ SCANLINE ═══ */
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(transparent, transparent 2px, rgba(0,0,0,0.012) 2px, rgba(0,0,0,0.012) 4px);
-    pointer-events: none;
-    z-index: 9998;
-  }
-  /* ═══ CUSTOM PIXEL CURSOR ═══ */
-  * {
-    cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="2" height="2" fill="%239b30ff"/><rect x="2" y="2" width="2" height="2" fill="%239b30ff"/><rect x="4" y="4" width="2" height="2" fill="%239b30ff"/><rect x="6" y="6" width="2" height="2" fill="%239b30ff"/><rect x="8" y="8" width="2" height="2" fill="%239b30ff"/><rect x="0" y="2" width="2" height="2" fill="%23c77dff"/><rect x="0" y="4" width="2" height="2" fill="%23c77dff"/><rect x="0" y="6" width="2" height="2" fill="%23c77dff"/><rect x="0" y="8" width="2" height="2" fill="%23c77dff"/><rect x="0" y="10" width="2" height="2" fill="%23c77dff"/><rect x="2" y="10" width="2" height="2" fill="%23c77dff"/><rect x="4" y="8" width="2" height="2" fill="%23c77dff"/><rect x="2" y="6" width="2" height="2" fill="%236a0dad"/><rect x="4" y="6" width="2" height="2" fill="%236a0dad"/><rect x="2" y="4" width="2" height="2" fill="%236a0dad"/><rect x="6" y="8" width="2" height="2" fill="%236a0dad"/></svg>') 0 0, auto;
-  }
-  a, button, .hero-cta, .hamburger, .nav-dropdown-toggle {
-    cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="2" height="2" fill="%232ee8bb"/><rect x="2" y="2" width="2" height="2" fill="%232ee8bb"/><rect x="4" y="4" width="2" height="2" fill="%232ee8bb"/><rect x="6" y="6" width="2" height="2" fill="%232ee8bb"/><rect x="8" y="8" width="2" height="2" fill="%232ee8bb"/><rect x="0" y="2" width="2" height="2" fill="%231aad85"/><rect x="0" y="4" width="2" height="2" fill="%231aad85"/><rect x="0" y="6" width="2" height="2" fill="%231aad85"/><rect x="0" y="8" width="2" height="2" fill="%231aad85"/><rect x="0" y="10" width="2" height="2" fill="%231aad85"/><rect x="2" y="10" width="2" height="2" fill="%231aad85"/><rect x="4" y="8" width="2" height="2" fill="%231aad85"/><rect x="2" y="6" width="2" height="2" fill="%23178a6a"/><rect x="4" y="6" width="2" height="2" fill="%23178a6a"/><rect x="2" y="4" width="2" height="2" fill="%23178a6a"/><rect x="6" y="8" width="2" height="2" fill="%23178a6a"/></svg>') 0 0, pointer;
-  }
+    /* MARQUEE */
+    .marquee-wrap {
+      overflow: hidden; border-top: 2px solid var(--obsidian-light);
+      border-bottom: 2px solid var(--obsidian-light); padding: 12px 0;
+      background: rgba(17,11,31,0.9); position: relative; z-index: 1;
+    }
+    .marquee { display: flex; gap: 3rem; animation: marquee 22s linear infinite; white-space: nowrap; }
+    .marquee span { font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; }
+    .marquee .sep { color: var(--ender-eye); }
+    @keyframes marquee { to{transform:translateX(-50%)} }
 
-  /* ═══ SCROLL TO TOP ═══ */
-  .scroll-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 44px;
-    height: 44px;
-    background: var(--obsidian);
-    border: 3px solid var(--obsidian-light);
-    color: var(--end-lavender);
-    font-family: 'Press Start 2P', cursive;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 997;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.3s;
-  }
-  .scroll-top.visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  .scroll-top:hover {
-    border-color: var(--ender-eye);
-    color: var(--ender-eye);
-    box-shadow: 0 0 15px rgba(46,232,187,0.3);
-    transform: translateY(-3px);
-  }
+    /* SECTIONS */
+    section { position: relative; z-index: 1; padding: 100px 24px; }
+    .section-header { text-align: center; margin-bottom: 58px; }
+    .section-header h2 {
+      font-family: 'Press Start 2P', monospace; font-size: clamp(14px,3vw,22px);
+      color: var(--ender-eye); margin-bottom: 14px;
+      text-shadow: 2px 2px 0 var(--end-purple), 0 0 20px rgba(46,232,187,0.2);
+    }
+    .section-header .divider {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      color: var(--end-magenta); font-family: 'VT323', monospace; font-size: 20px; letter-spacing: 3px;
+    }
+    .section-header .divider::before, .section-header .divider::after {
+      content: ''; width: 60px; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--end-purple), transparent);
+    }
 
-  /* ═══ STATUS BADGE ═══ */
-  .status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 24px;
-    padding: 10px 20px;
-    background: rgba(26,16,40,0.8);
-    border: 2px solid var(--obsidian-light);
-    font-family: 'Press Start 2P', cursive;
-    font-size: 8px;
-    color: var(--text-dim);
-    letter-spacing: 1px;
-  }
-  .status-dot {
-    width: 8px;
-    height: 8px;
-    background: #2ee8bb;
-    box-shadow: 0 0 8px rgba(46,232,187,0.6);
-    animation: statusPulse 2s ease-in-out infinite;
-  }
-  @keyframes statusPulse {
-    0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(46,232,187,0.6); }
-    50% { opacity: 0.5; box-shadow: 0 0 4px rgba(46,232,187,0.3); }
-  }
-  .status-server {
-    color: #ff9a2e;
-  }
-  .status-ip {
-    display: block;
-    margin-top: 8px;
-    padding: 6px 16px;
-    background: rgba(26,16,40,0.8);
-    border: 2px solid var(--obsidian-light);
-    font-family: 'Press Start 2P', cursive;
-    font-size: 8px;
-    color: var(--ender-eye-dim);
-    letter-spacing: 1px;
-    position: relative;
-    transition: all 0.2s;
-  }
-  .status-ip:hover {
-    border-color: var(--ender-eye);
-    color: var(--ender-eye);
-    box-shadow: 0 0 10px rgba(46,232,187,0.2);
-  }
-  .status-ip .copy-tooltip {
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--obsidian);
-    border: 2px solid var(--ender-eye);
-    padding: 5px 10px;
-    font-size: 7px;
-    color: var(--ender-eye);
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s;
-  }
-  .status-ip:hover .copy-tooltip {
-    opacity: 1;
-  }
-  .status-ip.copied {
-    border-color: var(--ender-eye);
-    color: var(--ender-eye);
-  }
-</style>
+    /* ABOUT */
+    #about { background: linear-gradient(180deg, transparent, rgba(151,52,175,0.12) 50%, transparent); }
+    .about-container {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: 260px 1fr; gap: 48px; align-items: start;
+    }
+    .skin-card {
+      background: var(--obsidian); padding: 24px; text-align: center; position: relative; border: 3px solid transparent;
+    }
+    .skin-card::before {
+      content: ''; position: absolute; inset: -3px;
+      background: linear-gradient(135deg, var(--end-lavender), var(--dragon-purple), var(--ender-eye-dim), var(--ender-eye));
+      background-size: 300% 300%; animation: borderSpin 5s linear infinite; z-index: -1;
+    }
+    .skin-card::after {
+      content: ''; position: absolute; inset: -6px;
+      background: linear-gradient(135deg, var(--ender-eye), var(--end-magenta), var(--end-purple), var(--ender-eye));
+      background-size: 300% 300%; animation: borderSpin 5s linear infinite;
+      z-index: -2; opacity: 0.4; filter: blur(12px);
+    }
+    @keyframes borderSpin { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+    .skin-render {
+      width: 210px; height: 210px; object-fit: cover; margin: 0 auto 16px;
+      animation: skinFloat 4s ease-in-out infinite;
+      filter: drop-shadow(0 10px 25px rgba(106,13,173,0.5));
+      border: 2px solid var(--obsidian-light); image-rendering: pixelated;
+    }
+    .skin-name { font-family: 'Press Start 2P', monospace; font-size: 11px; color: var(--end-lavender); text-shadow: 1px 1px 0 var(--end-purple); margin-bottom: 6px; }
+    .skin-tag { font-family: 'VT323', monospace; font-size: 20px; color: var(--text-dim); letter-spacing: 2px; }
+    .about-text { padding-top: 8px; }
+    .about-text h3 { font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--ender-eye); margin-bottom: 16px; margin-top: 24px; }
+    .about-text h3:first-child { margin-top: 0; }
+    .about-text p { font-family: 'VT323', monospace; font-size: 20px; line-height: 1.7; color: var(--text-primary); margin-bottom: 12px; }
+
+    /* SERVICES */
+    #services { background: linear-gradient(180deg, transparent, rgba(46,232,187,0.04) 50%, transparent); }
+    .services-grid {
+      max-width: 960px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 2px; background: var(--obsidian-light); border: 2px solid var(--obsidian-light);
+    }
+    .service-card {
+      background: var(--obsidian); padding: 1.8rem 1.5rem;
+      position: relative; transition: all 0.25s; overflow: hidden;
+    }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--sc-accent, var(--ender-eye)); transform: scaleX(0);
+      transform-origin: left; transition: transform 0.3s;
+    }
+    .service-card:hover { background: #1e1230; transform: translateY(-2px); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-card:nth-child(1){--sc-accent:var(--ender-eye)}
+    .service-card:nth-child(2){--sc-accent:var(--end-magenta)}
+    .service-card:nth-child(3){--sc-accent:#ff5c8a}
+    .service-card:nth-child(4){--sc-accent:var(--end-magenta)}
+    .service-card:nth-child(5){--sc-accent:var(--chorus)}
+    .service-card:nth-child(6){--sc-accent:var(--ender-eye)}
+    .service-num { position: absolute; top: 1rem; right: 1rem; font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--obsidian-light); }
+    .service-icon { font-size: 1.9rem; margin-bottom: 1.1rem; display: block; }
+    .service-name { font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--end-lavender); margin-bottom: 10px; line-height: 1.9; }
+    .service-desc { font-family: 'VT323', monospace; font-size: 19px; color: var(--text-dim); line-height: 1.55; }
+
+    /* PROCESS */
+    #process { background: linear-gradient(180deg, transparent, rgba(106,13,173,0.08) 50%, transparent); }
+    .steps { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem; position: relative; }
+    .steps::before {
+      content: ''; position: absolute; top: 28px; left: 14%; right: 14%; height: 2px;
+      background: linear-gradient(90deg, var(--ender-eye), var(--end-magenta), var(--chorus), var(--ender-eye));
+      opacity: 0.25;
+    }
+    .step { text-align: center; position: relative; z-index: 1; }
+    .step-num {
+      width: 56px; height: 56px; border: 3px solid var(--obsidian-light);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.2rem; font-family: 'Press Start 2P', monospace;
+      font-size: 12px; color: var(--ender-eye); background: var(--end-void); position: relative;
+    }
+    .step-num::before { content: ''; position: absolute; inset: -5px; border: 1px solid rgba(46,232,187,0.12); }
+    .step h4 { font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--end-lavender); margin-bottom: 10px; line-height: 1.8; }
+    .step p { font-family: 'VT323', monospace; font-size: 20px; color: var(--text-dim); }
+
+    /* STAFFING */
+    #staffing { background: linear-gradient(180deg, transparent, rgba(106,13,173,0.06) 50%, transparent); }
+    .staffing-grid { max-width: 900px; margin: 0 auto; display: grid; gap: 20px; }
+    .staff-card {
+      background: var(--obsidian); border: 3px solid var(--obsidian-light);
+      padding: 28px 32px; position: relative; overflow: hidden; transition: all 0.3s;
+    }
+    .staff-card:hover { border-color: var(--end-magenta); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(155,48,255,0.15); }
+    .staff-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(180deg, var(--ender-eye), var(--end-magenta)); }
+    .staff-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .staff-logo { width: 110px; height: 110px; object-fit: contain; filter: drop-shadow(0 0 8px rgba(155,48,255,0.3)); image-rendering: pixelated; }
+    .staff-server { font-family: 'Press Start 2P', monospace; font-size: 13px; color: var(--end-lavender); text-shadow: 0 0 10px rgba(199,125,255,0.3); }
+    .staff-header h4 { font-family: 'VT323', monospace; font-size: 20px; color: var(--text-dim); }
+    .staff-role-flow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .role-badge { padding: 6px 14px; border: 2px solid; font-family: 'Press Start 2P', monospace; font-size: 8px; }
+    .role-badge.helper { color: var(--yellow-rank); border-color: var(--yellow-rank); background: rgba(255,215,0,0.08); }
+    .role-badge.mod, .role-badge.sr-mod { color: var(--lightblue-rank); border-color: var(--lightblue-rank); background: rgba(51,199,209,0.08); }
+    .role-badge.player { color: var(--text-dim); border-color: var(--obsidian-light); }
+    .role-arrow { color: var(--end-magenta); font-family: 'Press Start 2P', monospace; font-size: 12px; animation: arrowPulse 2s ease-in-out infinite; }
+    @keyframes arrowPulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
+    .staff-desc { font-family: 'VT323', monospace; font-size: 20px; color: var(--text-dim); line-height: 1.5; margin-top: 14px; }
+    .staff-started { font-family: 'VT323', monospace; font-size: 17px; color: var(--ender-eye-dim); margin-top: 8px; }
+
+    /* SHOWCASES */
+    #showcases { background: linear-gradient(180deg, transparent, rgba(42,26,62,0.1) 50%, transparent); }
+    .apps-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
+    .app-card {
+      background: var(--obsidian); border: 3px solid var(--obsidian-light);
+      padding: 20px; text-align: center; transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .app-card:hover { border-color: var(--ender-eye); transform: translateY(-4px); box-shadow: 0 8px 30px rgba(46,232,187,0.15); }
+    .app-card::after { content: ''; position: absolute; bottom: 0; left: 20%; right: 20%; height: 3px; background: var(--end-magenta); opacity: 0; transition: opacity 0.3s; }
+    .app-card:hover::after { opacity: 1; }
+    .pixel-art-img { width: 128px; height: 128px; image-rendering: pixelated; margin: 0 auto 12px; display: block; }
+    .pixel-art-label { font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--end-lavender); margin-top: 8px; line-height: 1.8; }
+    .app-placeholder { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .app-placeholder .placeholder-icon { width: 60px; height: 60px; border: 3px dashed var(--obsidian-light); display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--text-dim); }
+
+    /* REVIEWS */
+    #reviews { background: linear-gradient(180deg, transparent, rgba(106,13,173,0.06) 50%, transparent); }
+    .reviews-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
+    .review-card {
+      background: var(--obsidian); border: 3px solid var(--obsidian-light);
+      padding: 28px; position: relative; overflow: hidden; transition: all 0.3s;
+    }
+    .review-card:hover { transform: translateY(-3px); }
+    .review-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, var(--ender-eye), var(--end-magenta)); }
+    .review-stars { color: var(--yellow-rank); font-size: 18px; letter-spacing: 2px; margin-bottom: 12px; }
+    .review-text { font-family: 'VT323', monospace; font-size: 22px; color: var(--text-primary); line-height: 1.6; margin-bottom: 16px; font-style: italic; }
+    .review-author { font-family: 'Press Start 2P', monospace; font-size: 9px; color: var(--ender-eye); }
+    .review-role { font-family: 'VT323', monospace; font-size: 18px; color: var(--text-dim); margin-top: 4px; }
+    .review-discord { font-family: 'VT323', monospace; font-size: 17px; color: var(--ender-eye-dim); text-decoration: none; margin-top: 6px; display: inline-block; transition: color 0.2s; }
+    .review-discord:hover { color: var(--ender-eye); text-decoration: underline; }
+    .review-logo { width: 160px; height: 160px; object-fit: contain; display: block; margin: 0 auto 16px; filter: drop-shadow(0 0 15px rgba(155,48,255,0.3)); image-rendering: pixelated; }
+    .review-akuma .review-text{color:#ffcc44} .review-akuma .review-author{color:#ff9a2e} .review-akuma .review-role{color:#e8a840} .review-akuma .review-discord{color:#cc7a20} .review-akuma .review-discord:hover{color:#ffcc44} .review-akuma:hover{border-color:#ff9a2e;box-shadow:0 6px 24px rgba(255,154,46,0.2)} .review-akuma::before{background:linear-gradient(90deg,#ff9a2e,#ffcc44)}
+    .review-hexed .review-text{color:#c77dff} .review-hexed .review-author{color:#9b30ff} .review-hexed .review-role{color:#b065e0} .review-hexed .review-discord{color:#7b2d8e} .review-hexed .review-discord:hover{color:#c77dff} .review-hexed:hover{border-color:#9b30ff;box-shadow:0 6px 24px rgba(155,48,255,0.2)} .review-hexed::before{background:linear-gradient(90deg,#9b30ff,#c77dff)}
+
+    /* CONTACT */
+    #contact { background: linear-gradient(180deg, transparent, rgba(106,13,173,0.06) 50%, transparent); padding-bottom: 140px; }
+    .contact-container { max-width: 500px; margin: 0 auto; }
+    .contact-card {
+      background: var(--obsidian); border: 3px solid var(--obsidian-light);
+      padding: 36px 32px; text-align: center; transition: all 0.3s;
+      text-decoration: none; display: block; position: relative; overflow: hidden;
+    }
+    .contact-card:hover { border-color: var(--end-magenta); transform: translateY(-3px); box-shadow: 0 6px 24px rgba(155,48,255,0.2); }
+    .contact-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--ender-eye), var(--end-magenta), var(--ender-eye)); }
+    .contact-icon { font-size: 42px; margin-bottom: 16px; display: block; }
+    .contact-label { font-family: 'Press Start 2P', monospace; font-size: 11px; color: var(--ender-eye); margin-bottom: 10px; }
+    .contact-value { font-family: 'VT323', monospace; font-size: 28px; color: var(--text-primary); margin-bottom: 6px; }
+    .contact-sub { font-family: 'VT323', monospace; font-size: 20px; color: var(--text-dim); }
+
+    /* FOOTER */
+    footer {
+      text-align: center; padding: 28px;
+      font-family: 'Press Start 2P', monospace; font-size: 8px;
+      color: var(--text-dim); border-top: 3px solid var(--obsidian-light);
+      position: relative; z-index: 1; letter-spacing: 0.08em;
+    }
+
+    /* SCROLL TOP */
+    .scroll-top {
+      position: fixed; bottom: 30px; right: 30px;
+      width: 44px; height: 44px; background: var(--obsidian);
+      border: 3px solid var(--obsidian-light); color: var(--end-lavender);
+      font-family: 'Press Start 2P', monospace; font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 997; opacity: 0; pointer-events: none; transition: all 0.3s;
+    }
+    .scroll-top.visible { opacity: 1; pointer-events: auto; }
+    .scroll-top:hover { border-color: var(--ender-eye); color: var(--ender-eye); box-shadow: 0 0 15px rgba(46,232,187,0.3); transform: translateY(-3px); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .about-container { grid-template-columns: 1fr; justify-items: center; }
+      .apps-grid { grid-template-columns: repeat(2,1fr); }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: repeat(2,1fr); }
+      .steps { grid-template-columns: repeat(2,1fr); }
+      .steps::before { display: none; }
+    }
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links { display: none; position: absolute; top: 64px; left: 0; right: 0; flex-direction: column; background: rgba(10,6,18,0.97); border-bottom: 3px solid var(--obsidian-light); padding: 12px 0; }
+      .nav-links.open { display: flex; }
+      .nav-links > a { padding: 14px 24px; font-size: 9px; border-bottom: 1px solid var(--obsidian-light); }
+      .nav-dropdown { width: 100%; }
+      .nav-dropdown-toggle { padding: 14px 24px; font-size: 9px; border-bottom: 1px solid var(--obsidian-light); width: 100%; }
+      .nav-dropdown-menu { position: static; min-width: unset; border: none; background: rgba(17,11,31,0.9); }
+      .nav-dropdown-menu a { padding: 12px 24px 12px 40px; font-size: 8px; border-bottom: 1px solid var(--obsidian-light) !important; }
+      .staff-header { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 560px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .apps-grid { grid-template-columns: repeat(2,1fr); }
+    }
+  </style>
 </head>
 <body>
 
-<!-- STAR FIELD -->
 <canvas id="stars-canvas"></canvas>
-
-<!-- PORTAL BORDER -->
 <div class="portal-border"></div>
 
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <div class="nav-logo">ALYSHAX<span class="blink">_</span></div>
+    <a href="#home" class="nav-logo">ALYSHAX<span class="blink">_</span></a>
     <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links">
       <a href="#about" onclick="document.querySelector('.nav-links').classList.remove('open')">ABOUT</a>
+      <a href="#services" onclick="document.querySelector('.nav-links').classList.remove('open')">SERVICES</a>
       <div class="nav-dropdown">
         <button class="nav-dropdown-toggle">STAFFING</button>
         <div class="nav-dropdown-menu">
-          <a href="#staffing" onclick="document.querySelector('.nav-links').classList.remove('open')">STAFFING EXPERIENCE</a>
-          <a href="#reviews" onclick="document.querySelector('.nav-links').classList.remove('open')">STAFFING REVIEWS</a>
+          <a href="#staffing" onclick="document.querySelector('.nav-links').classList.remove('open')">EXPERIENCE</a>
+          <a href="#reviews" onclick="document.querySelector('.nav-links').classList.remove('open')">REVIEWS</a>
         </div>
       </div>
       <a href="#showcases" onclick="document.querySelector('.nav-links').classList.remove('open')">SHOWCASES</a>
@@ -1032,23 +488,50 @@
   <div class="hero-bg"></div>
   <img class="hero-skull" src="https://mc-heads.net/head/Kaalysha/200" alt="Kaalysha">
   <div class="hero-title">ALYSHAX</div>
-  <div class="hero-subtitle">⬥ Welcome To My Portfolio ⬥</div>
-  <a href="#about" class="hero-cta">WOOOSH!</a>
+  <div class="hero-subtitle">⬥ Portfolio &amp; Services ⬥</div>
+  <div class="hero-tagline">
+    <span class="dot"></span>
+    PIXEL ARTIST · WEB DEV · MINECRAFT SPECIALIST
+  </div>
+  <div class="btn-row">
+    <a href="#services" class="btn btn-primary">VIEW SERVICES</a>
+    <a href="#about" class="btn btn-ghost">ABOUT ME</a>
+  </div>
   <div class="status-badge">
     <div class="status-dot"></div>
     CURRENTLY ACTIVE ON: <span class="status-server">AKUMAMC</span>
   </div>
-  <div class="status-ip" onclick="navigator.clipboard.writeText('play.akumamc.net');this.querySelector('.copy-tooltip').textContent='COPIED!';setTimeout(()=>this.querySelector('.copy-tooltip').textContent='CLICK TO COPY IP',1500)">
+  <div class="status-ip"
+    onclick="navigator.clipboard.writeText('play.akumamc.net');this.querySelector('.copy-tooltip').textContent='COPIED!';setTimeout(()=>this.querySelector('.copy-tooltip').textContent='CLICK TO COPY IP',1500)">
     <span class="copy-tooltip">CLICK TO COPY IP</span>
-    (play.akumamc.net)
+    play.akumamc.net
   </div>
   <div class="scroll-indicator">▼</div>
 </section>
 
-<!-- SCROLL TO TOP -->
-<button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">▲</button>
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span>Web Design</span><span class="sep">✦</span>
+    <span>Pixel Art</span><span class="sep">✦</span>
+    <span>Profile Pictures</span><span class="sep">✦</span>
+    <span>Discord Setup</span><span class="sep">✦</span>
+    <span>Minecraft Dev</span><span class="sep">✦</span>
+    <span>Bug Fixing</span><span class="sep">✦</span>
+    <span>Staff Experience</span><span class="sep">✦</span>
+    <span>Server Setup</span><span class="sep">✦</span>
+    <span>Web Design</span><span class="sep">✦</span>
+    <span>Pixel Art</span><span class="sep">✦</span>
+    <span>Profile Pictures</span><span class="sep">✦</span>
+    <span>Discord Setup</span><span class="sep">✦</span>
+    <span>Minecraft Dev</span><span class="sep">✦</span>
+    <span>Bug Fixing</span><span class="sep">✦</span>
+    <span>Staff Experience</span><span class="sep">✦</span>
+    <span>Server Setup</span><span class="sep">✦</span>
+  </div>
+</div>
 
-<!-- ABOUT ME -->
+<!-- ABOUT -->
 <section id="about">
   <div class="section-header">
     <h2>⚔ ABOUT ME</h2>
@@ -1056,26 +539,95 @@
   </div>
   <div class="about-container">
     <div class="skin-card">
-      <img
-        class="skin-render"
-        src="pixelart/Alyshax.png"
-        alt="Alyshax Render"
-      />
+      <img class="skin-render" src="pixelart/Alyshax.png" alt="Alyshax"
+        onerror="this.src='https://mc-heads.net/body/Kaalysha/200'">
       <div class="skin-name">(MOD) KAALYSHA</div>
       <div class="skin-tag">STAFFING ON AKUMAMC</div>
     </div>
     <div class="about-text">
-      <h3>>> WELCOME TO MY PORTFOLIO</h3>
-      <p>
-        Hey, I'm <strong style="color:var(--end-lavender)">Alyshax</strong> — 19 years old, an experienced Minecraft staff member who also found a passion for Pixel Art.
-      </p>
-      <p>
-        I'm currently staffing on <strong style="color:var(--end-lavender)">AkumaMC</strong> as a <span style="color:var(--lightblue-rank)">Mod</span>.<p>Mainly focussing on the <strong style="color:var(--end-lavender)">Prison</strong> Gamemode.</p><p>You can find me in-game by looking for the name: <strong style="color:var(--end-lavender)">Alyshax</strong></p>
-      </p>
+      <h3>>> WELCOME</h3>
+      <p>Hey, I'm <strong style="color:var(--end-lavender)">Alyshax</strong> — 19 years old, an experienced Minecraft staff member who also found a passion for Pixel Art.</p>
+      <p>I'm currently staffing on <strong style="color:var(--end-lavender)">AkumaMC</strong> as a <span style="color:var(--lightblue-rank)">Mod</span>, mainly focusing on the <strong style="color:var(--end-lavender)">Prison</strong> gamemode. Find me in-game as <strong style="color:var(--end-lavender)">Alyshax</strong>.</p>
+      <h3>>> WHAT I OFFER</h3>
+      <p>Beyond staffing, I offer digital services — from building websites and crafting pixel art, to setting up Discord &amp; Minecraft servers and squashing bugs. Check the services section below!</p>
       <h3>>> CONTACT</h3>
-      <p>
-        Discord: @alyshaxmc
-      </p>
+      <p>Discord: <strong style="color:var(--ender-eye)">@alyshaxmc</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header">
+    <h2>🛠 SERVICES</h2>
+    <div class="divider">WHAT I CAN DO FOR YOU</div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-num">01</span>
+      <span class="service-icon">🌐</span>
+      <div class="service-name">WEBSITE BUILDING</div>
+      <p class="service-desc">Custom websites built from scratch — responsive, fast, and tailored to your brand. Portfolios, landing pages, and more.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-num">02</span>
+      <span class="service-icon">🎨</span>
+      <div class="service-name">PIXEL ART</div>
+      <p class="service-desc">Retro-style pixel art for games, banners, icons, or any creative project. Each sprite crafted pixel by pixel.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-num">03</span>
+      <span class="service-icon">👤</span>
+      <div class="service-name">PROFILE PICTURES</div>
+      <p class="service-desc">Unique, eye-catching profile pictures and avatars — pixel style or illustrated, custom-designed to represent you.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-num">04</span>
+      <span class="service-icon">💬</span>
+      <div class="service-name">DISCORD SETUP</div>
+      <p class="service-desc">Full Discord server configuration — channels, roles, bots, permissions, and a polished look for your community.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-num">05</span>
+      <span class="service-icon">⛏️</span>
+      <div class="service-name">MINECRAFT SERVER</div>
+      <p class="service-desc">Complete Minecraft server setup — plugins, configurations, performance tuning, and everything to get you running smooth.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-num">06</span>
+      <span class="service-icon">🔧</span>
+      <div class="service-name">BUG FIXES & CONFIGS</div>
+      <p class="service-desc">Minecraft development support — fixing bugs, tweaking configs, optimizing plugins, and solving technical issues fast.</p>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div style="max-width:960px;margin:56px auto 0;">
+    <div class="section-header" style="margin-bottom:36px;">
+      <h2 style="font-size:clamp(11px,2vw,17px);">⚙ HOW IT WORKS</h2>
+      <div class="divider">SIMPLE PROCESS</div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4>CONTACT ME</h4>
+        <p>Reach out via Discord. Tell me what you need.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4>WE DISCUSS</h4>
+        <p>We talk through requirements, timeline, and pricing.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4>I BUILD IT</h4>
+        <p>I get to work and keep you updated throughout.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4>DELIVERED</h4>
+        <p>You receive your finished product. Revisions included.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1087,67 +639,66 @@
     <div class="divider">MY STAFFING JOURNEY</div>
   </div>
   <div class="staffing-grid">
-
-    <!-- ZenPvP -->
     <div class="staff-card">
       <div class="staff-header">
         <img class="staff-logo" src="zenpvp.png" alt="ZenPvP Logo">
-        <div class="staff-server" style="color: #3adf8f">ZenPvP</div>
-        <h4>play.zenpvp.net</h4>
+        <div>
+          <div class="staff-server" style="color:#3adf8f">ZenPvP</div>
+          <h4>play.zenpvp.net</h4>
+        </div>
       </div>
       <div class="staff-role-flow">
         <span class="role-badge helper">HELPER</span>
         <span class="role-arrow">»</span>
         <span class="role-badge sr-mod">MOD</span>
       </div>
-      <div class="staff-desc">ZenPvP — A Minecraft network established in 2021, focused on providing the "Ultimate Experience" with daily updates and new content added monthly. They offer gamemodes like Prison, Skyblock, Factions, and Survival with support for both Java and Bedrock.</div>
+      <div class="staff-desc">ZenPvP — A Minecraft network established in 2021, focused on providing the "Ultimate Experience" with daily updates. Gamemodes include Prison, Skyblock, Factions, and Survival, supporting Java and Bedrock.</div>
     </div>
-
-    <!-- HexedMC -->
     <div class="staff-card">
       <div class="staff-header">
         <img class="staff-logo" src="hexedmc.png" alt="HexedMC Logo">
-        <div class="staff-server">HexedMC</div>
-        <h4>play.hexedmc.net</h4>
+        <div>
+          <div class="staff-server">HexedMC</div>
+          <h4>play.hexedmc.net</h4>
+        </div>
       </div>
       <div class="staff-role-flow">
         <span class="role-badge helper">HELPER</span>
         <span class="role-arrow">»</span>
         <span class="role-badge mod">SR-MOD</span>
       </div>
-      <div class="staff-desc">HexedMC — A Minecraft network packed with various cool concepts and FULLY custom features, offering gamemodes like Prison. It supports crossplay between Java and Bedrock editions and is hosted in Europe.</div>
+      <div class="staff-desc">HexedMC — A Minecraft network packed with fully custom features, offering Prison and supporting crossplay between Java and Bedrock. Hosted in Europe.</div>
     </div>
-
-    <!-- PvPVille -->
     <div class="staff-card">
       <div class="staff-header">
         <img class="staff-logo" src="pvpville.png" alt="PvPVille Logo">
-        <div class="staff-server" style="color: #27F5D6">PvPVille</div>
+        <div>
+          <div class="staff-server" style="color:#27F5D6">PvPVille</div>
+        </div>
       </div>
       <div class="staff-role-flow">
         <span class="role-badge player">PLAYER</span>
         <span class="role-arrow">»</span>
         <span class="role-badge sr-mod">SR-MOD</span>
       </div>
-      <div class="staff-desc">PvPVille — A now-closed Minecraft server that offered a custom Prison gamemode. Despite a smaller playerbase, it stood out with its unique custom features.</div>
-      <div class="staff-started">Started as Senior Moderator</div>
+      <div class="staff-desc">PvPVille — A now-closed Minecraft server that offered a custom Prison gamemode with unique features, despite a smaller playerbase.</div>
+      <div class="staff-started">★ Started as Senior Moderator</div>
     </div>
-
-    <!-- AkumaMC -->
     <div class="staff-card">
       <div class="staff-header">
         <img class="staff-logo" src="akumamc.png" alt="AkumaMC Logo">
-        <div class="staff-server" style="color: #fac83f">AkumaMC</div>
-        <h4>play.akumamc.net</h4>
+        <div>
+          <div class="staff-server" style="color:#fac83f">AkumaMC</div>
+          <h4>play.akumamc.net</h4>
+        </div>
       </div>
       <div class="staff-role-flow">
         <span class="role-badge helper">HELPER</span>
         <span class="role-arrow">»</span>
         <span class="role-badge mod">MOD</span>
       </div>
-      <div class="staff-desc">AkumaMC — A multi-gamemode Minecraft network featuring both Skyblock and OP-Prison gamemodes. It has a vibrant community of over 45,000 players on Discord and is one of the larger networks out there, supporting versions 1.8 through 1.21.</div>
+      <div class="staff-desc">AkumaMC — A multi-gamemode network featuring Skyblock and OP-Prison, with 45,000+ players on Discord. Supports versions 1.8 through 1.21.</div>
     </div>
-
   </div>
 </section>
 
@@ -1158,32 +709,26 @@
     <div class="divider">ARTS MADE BY ALYSHA</div>
   </div>
   <div class="apps-grid">
-
     <div class="app-card">
-      <img class="pixel-art-img" src="pixelart/art1.png" alt="Pixel Art 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <img class="pixel-art-img" src="pixelart/art1.png" alt="Pixel Art 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
       <div class="app-placeholder" style="display:none;"><div class="placeholder-icon">🎨</div></div>
       <div class="pixel-art-label">Kilyyan's Profile</div>
     </div>
-
     <div class="app-card">
-      <img class="pixel-art-img" src="pixelart/art2.png" alt="Pixel Art 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <img class="pixel-art-img" src="pixelart/art2.png" alt="Pixel Art 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
       <div class="app-placeholder" style="display:none;"><div class="placeholder-icon">🎨</div></div>
-      <div class="pixel-art-label">Alysha's Profile
-      </div>
+      <div class="pixel-art-label">Alysha's Profile</div>
     </div>
-
     <div class="app-card">
-      <img class="pixel-art-img" src="pixelart/art3.png" alt="Pixel Art 3" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <img class="pixel-art-img" src="pixelart/art3.png" alt="Pixel Art 3" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
       <div class="app-placeholder" style="display:none;"><div class="placeholder-icon">🎨</div></div>
       <div class="pixel-art-label">Jaipel's Profile</div>
     </div>
-
     <div class="app-card">
-      <img class="pixel-art-img" src="pixelart/art4.png" alt="Pixel Art 4" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <img class="pixel-art-img" src="pixelart/art4.png" alt="Pixel Art 4" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
       <div class="app-placeholder" style="display:none;"><div class="placeholder-icon">🎨</div></div>
       <div class="pixel-art-label">TakeHer's Profile</div>
     </div>
-
   </div>
 </section>
 
@@ -1191,10 +736,9 @@
 <section id="reviews">
   <div class="section-header">
     <h2>⭐ STAFFING REVIEWS</h2>
-    <div class="divider">Short Summary Alysha's Staffing Period</div>
+    <div class="divider">SHORT SUMMARY OF ALYSHA'S STAFFING PERIOD</div>
   </div>
   <div class="reviews-grid">
-
     <div class="review-card review-akuma">
       <img class="review-logo" src="akumamc.png" alt="AkumaMC Logo">
       <div class="review-text">"???"</div>
@@ -1202,16 +746,13 @@
       <div class="review-role">Staff Manager</div>
       <a href="https://discord.gg/akumamc" target="_blank" class="review-discord">discord.gg/akumamc</a>
     </div>
-
     <div class="review-card review-hexed">
       <img class="review-logo" src="hexedmc.png" alt="HexedMC Logo">
       <div class="review-text">"???"</div>
       <div class="review-author">— ??? (HexedMC)</div>
       <div class="review-role">Staff Manager</div>
       <a href="https://discord.gg/hexedmc" target="_blank" class="review-discord">discord.gg/hexedmc</a>
-      
     </div>
-
   </div>
 </section>
 
@@ -1222,30 +763,28 @@
     <div class="divider">GET IN TOUCH</div>
   </div>
   <div class="contact-container">
-    <div class="contact-card">
+    <a href="https://discord.com/users/alyshaxmc" class="contact-card" target="_blank">
       <span class="contact-icon">💬</span>
       <div class="contact-label">DISCORD</div>
       <div class="contact-value">@alyshaxmc</div>
-      <div class="contact-sub">Reach out via Discord</div>
-    </div>
+      <div class="contact-sub">Reach out for services or staffing inquiries</div>
+    </a>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  BUILT BY ALYSHAX &nbsp;|&nbsp; © 2026
+  BUILT BY ALYSHAX &nbsp;|&nbsp; © 2026 &nbsp;|&nbsp; PORTFOLIO &amp; SERVICES
 </footer>
 
+<button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">▲</button>
+
 <script>
-  // ═══ END DIMENSION PARTICLES ═══
+  // END DIMENSION PARTICLES
   const canvas = document.getElementById('stars-canvas');
   const ctx = canvas.getContext('2d');
   let particles = [];
 
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
+  function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
@@ -1257,7 +796,6 @@
       this.size = Math.random() * 2.5 + 0.5;
       this.speedY = (Math.random() - 0.5) * 0.4;
       this.speedX = (Math.random() - 0.5) * 0.3;
-      this.opacity = Math.random() * 0.5 + 0.1;
       this.life = 0;
       this.maxLife = Math.random() * 400 + 150;
       this.twinkleSpeed = Math.random() * 0.02 + 0.005;
@@ -1265,10 +803,8 @@
       this.color = colors[Math.floor(Math.random() * colors.length)];
     }
     update() {
-      this.x += this.speedX;
-      this.y += this.speedY;
-      this.life++;
-      this.opacity = (Math.sin(this.life * this.twinkleSpeed) * 0.3 + 0.3);
+      this.x += this.speedX; this.y += this.speedY; this.life++;
+      this.opacity = Math.sin(this.life * this.twinkleSpeed) * 0.3 + 0.3;
       if (this.life >= this.maxLife) this.reset();
       if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
       if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
@@ -1276,12 +812,11 @@
     draw() {
       ctx.fillStyle = this.color;
       ctx.globalAlpha = this.opacity;
-      const s = Math.floor(this.size);
-      ctx.fillRect(Math.floor(this.x), Math.floor(this.y), s, s);
+      ctx.fillRect(Math.floor(this.x), Math.floor(this.y), Math.floor(this.size), Math.floor(this.size));
     }
   }
 
-  for (let i = 0; i < 80; i++) {
+  for (let i = 0; i < 90; i++) {
     const p = new EndParticle();
     p.life = Math.random() * p.maxLife;
     particles.push(p);
@@ -1295,10 +830,14 @@
   }
   animate();
 
-  // ═══ DISABLE RIGHT-CLICK ═══
+  // DISABLE RIGHT-CLICK
   document.addEventListener('contextmenu', e => e.preventDefault());
 
-  // ═══ SCROLL REVEAL ═══
+  // SCROLL TO TOP
+  const scrollTopBtn = document.querySelector('.scroll-top');
+  window.addEventListener('scroll', () => scrollTopBtn.classList.toggle('visible', window.scrollY > 400));
+
+  // SCROLL REVEAL
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1306,21 +845,14 @@
         entry.target.style.transform = 'translateY(0)';
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.08 });
 
-  // ═══ SCROLL TO TOP BUTTON ═══
-  const scrollTopBtn = document.querySelector('.scroll-top');
-  window.addEventListener('scroll', () => {
-    scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
-  });
-
-  document.querySelectorAll('.staff-card, .app-card, .contact-card, .skin-card, .about-text').forEach(el => {
+  document.querySelectorAll('.staff-card,.app-card,.contact-card,.skin-card,.about-text,.service-card,.step,.review-card').forEach((el, i) => {
     el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    el.style.transform = 'translateY(28px)';
+    el.style.transition = `opacity 0.6s ease ${(i % 6) * 0.07}s, transform 0.6s ease ${(i % 6) * 0.07}s`;
     observer.observe(el);
   });
 </script>
-
 </body>
 </html>
