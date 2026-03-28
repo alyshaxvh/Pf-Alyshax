@@ -258,26 +258,26 @@
     /* ABOUT */
     #about { background: linear-gradient(180deg, transparent, rgba(151,52,175,0.12) 50%, transparent); }
     .about-container {
-      max-width: 900px; margin: 0 auto;
-      display: grid; grid-template-columns: 260px 1fr; gap: 48px; align-items: start;
+      max-width: 960px; margin: 0 auto;
+      display: grid; grid-template-columns: 310px 1fr; gap: 48px; align-items: stretch;
     }
     .skin-card {
-      background: var(--obsidian); padding: 24px; text-align: center; position: relative; border: 3px solid transparent;
+      background: var(--obsidian); padding: 16px; text-align: center; position: relative; border: 3px solid transparent; display: flex; align-items: center;
     }
     .skin-card::before {
       content: ''; position: absolute; inset: -3px;
-      background: linear-gradient(135deg, var(--end-lavender), var(--dragon-purple), var(--ender-eye-dim), var(--ender-eye));
+      background: linear-gradient(135deg, #0d0015, #3b0068, #1a0030, #6a0daa, #0d0015);
       background-size: 300% 300%; animation: borderSpin 5s linear infinite; z-index: -1;
     }
     .skin-card::after {
       content: ''; position: absolute; inset: -6px;
-      background: linear-gradient(135deg, var(--ender-eye), var(--end-magenta), var(--end-purple), var(--ender-eye));
+      background: linear-gradient(135deg, #3b0068, #0d0015, #6a0daa, #0d0015);
       background-size: 300% 300%; animation: borderSpin 5s linear infinite;
-      z-index: -2; opacity: 0.4; filter: blur(12px);
+      z-index: -2; opacity: 0.5; filter: blur(14px);
     }
     @keyframes borderSpin { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
     .skin-render {
-      width: 210px; height: 210px; object-fit: cover; margin: 0 auto 16px;
+      width: 100%; height: 100%; object-fit: cover; margin: 0 auto;
       animation: skinFloat 4s ease-in-out infinite;
       filter: drop-shadow(0 10px 25px rgba(106,13,173,0.5));
       border: 2px solid var(--obsidian-light); image-rendering: pixelated;
@@ -317,6 +317,51 @@
     .service-icon { font-size: 1.9rem; margin-bottom: 1.1rem; display: block; }
     .service-name { font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--end-lavender); margin-bottom: 10px; line-height: 1.9; }
     .service-desc { font-family: 'VT323', monospace; font-size: 19px; color: var(--text-dim); line-height: 1.55; }
+    .buy-now-btn {
+      display: inline-block; margin-top: 14px; font-family: 'Press Start 2P', monospace;
+      font-size: 8px; letter-spacing: 0.07em; padding: 10px 16px; text-transform: uppercase;
+      background: linear-gradient(180deg, #ff5c8a 0%, #c93060 100%);
+      color: #fff; border: none; cursor: pointer;
+      box-shadow: 0 4px 0 #7a1030, 0 6px 18px rgba(255,92,138,0.3);
+      transition: all 0.15s;
+    }
+    .buy-now-btn:hover { transform: translateY(2px); box-shadow: 0 2px 0 #7a1030, 0 3px 10px rgba(255,92,138,0.4); }
+    .coming-soon-btn {
+      display: inline-block; margin-top: 14px; font-family: 'Press Start 2P', monospace;
+      font-size: 8px; letter-spacing: 0.07em; padding: 10px 16px; text-transform: uppercase;
+      background: #1e1230; color: #fff; border: 2px solid var(--obsidian-light);
+      cursor: not-allowed; opacity: 0.7;
+    }
+    .buy-modal-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+      z-index: 9999; align-items: center; justify-content: center;
+    }
+    .buy-modal-overlay.active { display: flex; }
+    .buy-modal {
+      background: #12091e; border: 2px solid #ff5c8a;
+      padding: 2rem 2.2rem; max-width: 380px; width: 90%;
+      box-shadow: 0 0 40px rgba(255,92,138,0.25); position: relative;
+    }
+    .buy-modal h3 {
+      font-family: 'Press Start 2P', monospace; font-size: 9px; color: #ff5c8a;
+      margin-bottom: 1.2rem; line-height: 1.9;
+    }
+    .buy-modal .modal-step {
+      font-family: 'VT323', monospace; font-size: 20px; color: var(--text-dim);
+      margin-bottom: 0.6rem; line-height: 1.5;
+    }
+    .buy-modal .modal-step span { color: var(--end-lavender); }
+    .buy-modal .modal-msg {
+      background: #1e1230; border-left: 3px solid #ff5c8a;
+      padding: 10px 14px; font-family: 'VT323', monospace; font-size: 21px;
+      color: #fff; margin: 10px 0 1.4rem; line-height: 1.5; user-select: all;
+    }
+    .buy-modal .modal-close {
+      position: absolute; top: 10px; right: 14px; background: none; border: none;
+      color: var(--text-dim); font-family: 'Press Start 2P', monospace; font-size: 9px;
+      cursor: pointer;
+    }
+    .buy-modal .modal-close:hover { color: #ff5c8a; }
 
     /* PROCESS */
     #process { background: linear-gradient(180deg, transparent, rgba(106,13,173,0.08) 50%, transparent); }
@@ -541,8 +586,6 @@
     <div class="skin-card">
       <img class="skin-render" src="pixelart/Alyshax.png" alt="Alyshax"
         onerror="this.src='https://mc-heads.net/body/Kaalysha/200'">
-      <div class="skin-name">(MOD) KAALYSHA</div>
-      <div class="skin-tag">STAFFING ON AKUMAMC</div>
     </div>
     <div class="about-text">
       <h3>>> WELCOME</h3>
@@ -550,8 +593,6 @@
       <p>I'm currently staffing on <strong style="color:var(--end-lavender)">AkumaMC</strong> as a <span style="color:var(--lightblue-rank)">Mod</span>, mainly focusing on the <strong style="color:var(--end-lavender)">Prison</strong> gamemode. Find me in-game as <strong style="color:var(--end-lavender)">Alyshax</strong>.</p>
       <h3>>> WHAT I OFFER</h3>
       <p>Beyond staffing, I offer digital services — from building websites and crafting pixel art, to setting up Discord &amp; Minecraft servers and squashing bugs. Check the services section below!</p>
-      <h3>>> CONTACT</h3>
-      <p>Discord: <strong style="color:var(--ender-eye)">@alyshaxmc</strong></p>
     </div>
   </div>
 </section>
@@ -568,36 +609,90 @@
       <span class="service-icon">🌐</span>
       <div class="service-name">WEBSITE BUILDING</div>
       <p class="service-desc">Custom websites built from scratch — responsive, fast, and tailored to your brand. Portfolios, landing pages, and more.</p>
+      <button class="buy-now-btn" onclick="document.getElementById('websiteModal').classList.add('active')">BUY NOW</button>
+    </div>
+
+    <!-- WEBSITE MODAL -->
+    <div class="buy-modal-overlay" id="websiteModal" onclick="if(event.target===this)this.classList.remove('active')">
+      <div class="buy-modal">
+        <button class="modal-close" onclick="document.getElementById('websiteModal').classList.remove('active')">✕</button>
+        <h3>ORDER A WEBSITE</h3>
+        <p class="modal-step"><span>1.</span> Open Discord and DM:</p>
+        <div class="buy-modal-msg" style="background:#1e1230;border-left:3px solid #ff5c8a;padding:10px 14px;font-family:'VT323',monospace;font-size:21px;color:#fff;margin:8px 0 1.2rem;user-select:all;">alyshaxmc</div>
+        <p class="modal-step"><span>2.</span> Send this message:</p>
+        <div class="buy-modal-msg" style="background:#1e1230;border-left:3px solid #ff5c8a;padding:10px 14px;font-family:'VT323',monospace;font-size:21px;color:#fff;margin:8px 0;user-select:all;">Hey Alysha! I want to order a website.</div>
+      </div>
     </div>
     <div class="service-card">
       <span class="service-num">02</span>
       <span class="service-icon">🎨</span>
       <div class="service-name">PIXEL ART</div>
       <p class="service-desc">Retro-style pixel art for games, banners, icons, or any creative project. Each sprite crafted pixel by pixel.</p>
+      <button class="buy-now-btn" onclick="document.getElementById('pixelArtModal').classList.add('active')">BUY NOW</button>
+    </div>
+
+    <!-- PIXEL ART MODAL -->
+    <div class="buy-modal-overlay" id="pixelArtModal" onclick="if(event.target===this)this.classList.remove('active')">
+      <div class="buy-modal">
+        <button class="modal-close" onclick="document.getElementById('pixelArtModal').classList.remove('active')">✕</button>
+        <h3>ORDER PIXEL ART</h3>
+        <p class="modal-step"><span>1.</span> Open Discord and DM:</p>
+        <div class="buy-modal-msg" style="background:#1e1230;border-left:3px solid #ff5c8a;padding:10px 14px;font-family:'VT323',monospace;font-size:21px;color:#fff;margin:8px 0 1.2rem;user-select:all;">alyshaxmc</div>
+        <p class="modal-step"><span>2.</span> Send this message:</p>
+        <div class="buy-modal-msg" style="background:#1e1230;border-left:3px solid #ff5c8a;padding:10px 14px;font-family:'VT323',monospace;font-size:21px;color:#fff;margin:8px 0;user-select:all;">Hey Alysha! I want to order pixel art.</div>
+      </div>
     </div>
     <div class="service-card">
       <span class="service-num">03</span>
       <span class="service-icon">👤</span>
-      <div class="service-name">PROFILE PICTURES</div>
+      <div class="service-name">PROFILE PICTURES ($4.99)</div>
       <p class="service-desc">Unique, eye-catching profile pictures and avatars — pixel style or illustrated, custom-designed to represent you.</p>
+      <button class="buy-now-btn" onclick="document.getElementById('buyNowModal').classList.add('active')">BUY NOW</button>
+    </div>
+
+    <!-- BUY NOW MODAL -->
+    <div class="buy-modal-overlay" id="buyNowModal" onclick="if(event.target===this)this.classList.remove('active')">
+      <div class="buy-modal">
+        <button class="modal-close" onclick="document.getElementById('buyNowModal').classList.remove('active')">✕</button>
+        <h3>ORDER A PROFILE PICTURE</h3>
+        <p class="modal-step"><span>1.</span> Open Discord and DM:</p>
+        <div class="buy-modal-msg" style="background:#1e1230;border-left:3px solid #ff5c8a;padding:10px 14px;font-family:'VT323',monospace;font-size:21px;color:#fff;margin:8px 0 1.2rem;user-select:all;">alyshaxmc</div>
+        <p class="modal-step"><span>2.</span> Send this message:</p>
+        <div class="buy-modal-msg" style="background:#1e1230;border-left:3px solid #ff5c8a;padding:10px 14px;font-family:'VT323',monospace;font-size:21px;color:#fff;margin:8px 0;user-select:all;">Hey Alysha! I want to order a profile picture.</div>
+      </div>
     </div>
     <div class="service-card">
       <span class="service-num">04</span>
       <span class="service-icon">💬</span>
       <div class="service-name">DISCORD SETUP</div>
       <p class="service-desc">Full Discord server configuration — channels, roles, bots, permissions, and a polished look for your community.</p>
+      <button class="buy-now-btn" onclick="document.getElementById('discordModal').classList.add('active')">BUY NOW</button>
+    </div>
+
+    <!-- DISCORD SETUP MODAL -->
+    <div class="buy-modal-overlay" id="discordModal" onclick="if(event.target===this)this.classList.remove('active')">
+      <div class="buy-modal">
+        <button class="modal-close" onclick="document.getElementById('discordModal').classList.remove('active')">✕</button>
+        <h3>ORDER A DISCORD SETUP</h3>
+        <p class="modal-step"><span>1.</span> Open Discord and DM:</p>
+        <div class="buy-modal-msg" style="background:#1e1230;border-left:3px solid #ff5c8a;padding:10px 14px;font-family:'VT323',monospace;font-size:21px;color:#fff;margin:8px 0 1.2rem;user-select:all;">alyshaxmc</div>
+        <p class="modal-step"><span>2.</span> Send this message:</p>
+        <div class="buy-modal-msg" style="background:#1e1230;border-left:3px solid #ff5c8a;padding:10px 14px;font-family:'VT323',monospace;font-size:21px;color:#fff;margin:8px 0;user-select:all;">Hey Alysha! I want to order a Discord setup.</div>
+      </div>
     </div>
     <div class="service-card">
       <span class="service-num">05</span>
       <span class="service-icon">⛏️</span>
       <div class="service-name">MINECRAFT SERVER</div>
       <p class="service-desc">Complete Minecraft server setup — plugins, configurations, performance tuning, and everything to get you running smooth.</p>
+      <button class="coming-soon-btn" disabled>COMING SOON</button>
     </div>
     <div class="service-card">
       <span class="service-num">06</span>
       <span class="service-icon">🔧</span>
       <div class="service-name">BUG FIXES & CONFIGS</div>
       <p class="service-desc">Minecraft development support — fixing bugs, tweaking configs, optimizing plugins, and solving technical issues fast.</p>
+      <button class="coming-soon-btn" disabled>COMING SOON</button>
     </div>
   </div>
 
